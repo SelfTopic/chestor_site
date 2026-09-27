@@ -1,3 +1,9 @@
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+
 export default function Home() {
-  return <main>chestor.site</main>;
+  return (
+    <main style={{ padding: 40 }}>
+      <ThemeToggle />
+    </main>
+  );
 }
