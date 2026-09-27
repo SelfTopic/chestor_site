@@ -1,0 +1,106 @@
+.page {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  min-height: 100dvh;
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-chat-bg);
+  text-align: center;
+}
+
+.page404 {
+  width: 150px;
+  height: auto;
+  animation: sway 4s var(--ease-in-out) infinite;
+}
+
+@keyframes sway {
+  50% {
+    transform: rotate(-3deg) translateY(-4px);
+  }
+}
+
+.sheet {
+  fill: var(--color-bg-elevated);
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.fold {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.line {
+  stroke: var(--color-text-faint);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.drops path {
+  fill: var(--color-accent);
+}
+
+.code {
+  margin-top: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+}
+
+.title {
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.text {
+  max-width: 440px;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.primary,
+.secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+}
+
+.primary {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--glow);
+}
+
+.secondary {
+  border: 1.5px solid var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.primary:hover,
+.secondary:hover {
+  text-decoration: none;
+  filter: brightness(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page404 {
+    animation: none;
+  }
+}
