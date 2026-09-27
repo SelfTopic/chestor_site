@@ -6,8 +6,8 @@ const base = process.argv[2] ?? "http://localhost:3000";
 const paths = process.argv.length > 3 ? process.argv.slice(3) : ["/"];
 const executablePath = process.env.CHROMIUM_PATH ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 const widths = [
-  { name: "desktop", width: 1440, height: 900 },
-  { name: "mobile", width: 390, height: 844 },
+  { name: "desktop", width: 1440, height: Number(process.env.HEIGHT ?? 900) },
+  { name: "mobile", width: 390, height: Number(process.env.HEIGHT ?? 844) },
 ];
 const themes = ["human", "ghoul"];
 

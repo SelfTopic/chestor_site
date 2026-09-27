@@ -4,7 +4,7 @@ export const OWNER = {
   gitName: "CheStor",
   role: "бэкенд · Python · TypeScript",
   country: "Россия",
-  since: "апрель 2025",
+  since: "апреля 2025",
   quote: "In code I trust, for it never lies or betrays — it simply executes.",
   links: {
     telegram: { href: "https://t.me/Self_topic", label: "@Self_topic" },

@@ -1,0 +1,122 @@
+.profile {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  align-self: center;
+  width: min(360px, 100%);
+  margin: 0 auto var(--space-5);
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--color-bubble-in);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+:global(:root[data-theme="ghoul"]) .profile {
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md), 0 0 40px rgba(226, 32, 63, 0.12);
+}
+
+.name {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.alias {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.role {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.rows {
+  display: grid;
+  width: 100%;
+  margin: var(--space-3) 0 0;
+  text-align: left;
+}
+
+.rows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.rows dt {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.rows dd {
+  margin: 0;
+  font-weight: 500;
+}
+
+.stackIntro {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.stack {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.group {
+  display: grid;
+  gap: 6px;
+}
+
+.groupTitle {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.chip {
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-soft);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+}
+
+.quote {
+  position: relative;
+  display: block;
+  padding: var(--space-2) var(--space-2) var(--space-2) 2.6rem;
+  font-size: var(--text-lg);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.quoteMark {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--color-accent);
+}
