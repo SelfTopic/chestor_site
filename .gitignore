@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+coverage/
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.session
+*.session-journal
+.env
+.env.*
+!.env.example
+.DS_Store
