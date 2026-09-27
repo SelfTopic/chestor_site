@@ -14,6 +14,7 @@ from .mock import MockGroup
 from .security import PassSigner
 from .services.captcha import CaptchaService
 from .services.chat import ChatService
+from .services.media import MediaFetcher, MediaService
 from .services.moderation import ModerationService
 from .services.outbox import Outbox
 from .services.ports import GroupGateway
@@ -49,6 +50,7 @@ def create_app(
     *,
     storage: Storage | None = None,
     quiz_source: QuestionSource | None = None,
+    media_fetcher: MediaFetcher | None = None,
     limits: Limits = LIMITS,
     clock: Callable[[], float] = time.time,
     start_bot: bool = True,
@@ -66,6 +68,7 @@ def create_app(
     mock: MockGroup | None = None
     dispatcher: ChatDispatcher | None = None
     gateway: GroupGateway
+    fetcher = media_fetcher
     if settings.chat_mode == "telegram":
         assert settings.bot_token and settings.chat_id is not None
         dispatcher = ChatDispatcher(
@@ -73,7 +76,9 @@ def create_app(
             BotDeps(chat, moderation, settings.chat_id),
             polling=settings.is_dev,
         )
-        gateway = TelegramGateway(dispatcher.api, settings.chat_id)
+        telegram_gateway = TelegramGateway(dispatcher.api, settings.chat_id)
+        gateway = telegram_gateway
+        fetcher = fetcher or telegram_gateway
     else:
         mock = MockGroup()
         mock.chat = chat
@@ -91,6 +96,7 @@ def create_app(
         hub=hub,
         signer=signer,
         clock=clock,
+        media=MediaService(storage, fetcher, limits, clock=clock),
     )
     setup_routes(app)
     app[OUTBOX] = outbox

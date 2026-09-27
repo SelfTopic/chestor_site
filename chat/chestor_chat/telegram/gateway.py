@@ -2,6 +2,7 @@ from selfrot import Bot
 from selfrot.exceptions import SelfrotError, TelegramRetryAfter
 from selfrot.types import LinkPreviewOptions, MessageEntity
 
+from ..services.media import MediaUnavailable
 from ..services.ports import GatewayError, GatewayRetryAfter
 from ..validation import utf16_length
 
@@ -31,3 +32,9 @@ class TelegramGateway:
         except SelfrotError as exc:
             raise GatewayError(str(exc)) from exc
         return message.message_id
+
+    async def fetch(self, file_id: str) -> bytes:
+        try:
+            return await self._bot.download(file_id)
+        except SelfrotError as exc:
+            raise MediaUnavailable(str(exc)) from exc

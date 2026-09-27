@@ -1,9 +1,10 @@
+import secrets
 import time
 from collections.abc import Callable
 
 from ..errors import Banned, CaptchaRequired, SiteMuted
 from ..limits import Limits
-from ..models import ChatMessage, IncomingMessage, Quote, RelayRecord, SiteSender
+from ..models import ChatMessage, IncomingMessage, Media, Quote, RelayRecord, SiteSender
 from ..storage import Storage
 from ..validation import clean_nick, clean_text
 from .outbox import Outbox, Outgoing
@@ -46,6 +47,13 @@ class ChatService:
         return await self._storage.site_mute_until(self._clock())
 
     async def ingest(self, incoming: IncomingMessage) -> ChatMessage:
+        media = None
+        if incoming.media is not None:
+            # Наружу уходит только свой случайный ключ: чужой file_id по нему не получить.
+            key = secrets.token_urlsafe(16)
+            await self._storage.put_media(key, incoming.media.file_id, self._limits.media_ttl)
+            ref = incoming.media
+            media = Media(key=key, kind=ref.kind, width=ref.width, height=ref.height)
         message = ChatMessage(
             id=f"tg:{incoming.tg_message_id}",
             source="telegram",
@@ -53,6 +61,7 @@ class ChatService:
             text=incoming.text,
             ts=incoming.ts,
             quote=await self._quote_for(incoming),
+            media=media,
         )
         await self._publish(message)
         return message

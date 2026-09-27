@@ -13,6 +13,7 @@ class MemoryStorage:
         self._mute_until: float | None = None
         self._challenges: dict[str, tuple[float, dict[str, Any]]] = {}
         self._relays: dict[int, tuple[float, RelayRecord]] = {}
+        self._media: dict[str, tuple[float, str]] = {}
 
     async def add_message(self, message: ChatMessage, keep: int) -> None:
         self._messages.append(message)
@@ -73,6 +74,16 @@ class MemoryStorage:
             return None
         return entry[1]
 
+    async def put_media(self, key: str, file_id: str, ttl: int) -> None:
+        self._sweep()
+        self._media[key] = (time.time() + ttl, file_id)
+
+    async def media_file(self, key: str) -> str | None:
+        entry = self._media.get(key)
+        if entry is None or entry[0] <= time.time():
+            return None
+        return entry[1]
+
     async def close(self) -> None:
         return None
 
@@ -82,3 +93,5 @@ class MemoryStorage:
             del self._challenges[key]
         for tg_id in [tg_id for tg_id, (expires, _) in self._relays.items() if expires <= now]:
             del self._relays[tg_id]
+        for key in [key for key, (expires, _) in self._media.items() if expires <= now]:
+            del self._media[key]

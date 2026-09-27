@@ -90,29 +90,51 @@ async def test_group_text_reaches_site_without_username(harness: Harness) -> Non
     assert "secret_username" not in str(message.to_json())
 
 
-async def test_media_become_placeholders(harness: Harness) -> None:
-    photo = [{"file_id": "f", "file_unique_id": "u", "width": 1, "height": 1}]
-    await harness.feed(group_message(1, None, photo=photo, caption="смотрите"))
-    await harness.feed(
-        group_message(
-            2,
-            None,
-            sticker={
-                "file_id": "s",
-                "file_unique_id": "su",
-                "type": "regular",
-                "width": 1,
-                "height": 1,
-                "is_animated": False,
-                "is_video": False,
-            },
-        )
-    )
-    await eventually(lambda: len(harness.events.messages) == 2)
-    assert sorted(message.text for message in harness.events.messages) == [
-        "[стикер]",
-        "[фото] смотрите",
+async def test_photos_and_stickers_become_site_media(harness: Harness) -> None:
+    photo = [
+        {"file_id": "small", "file_unique_id": "u1", "width": 90, "height": 60},
+        {"file_id": "mid", "file_unique_id": "u2", "width": 800, "height": 600},
+        {"file_id": "huge", "file_unique_id": "u3", "width": 2560, "height": 1920},
     ]
+    await harness.feed(group_message(1, None, photo=photo, caption="смотрите"))
+    sticker = {
+        "file_id": "s",
+        "file_unique_id": "su",
+        "type": "regular",
+        "width": 512,
+        "height": 512,
+        "is_animated": False,
+        "is_video": False,
+    }
+    await harness.feed(group_message(2, None, sticker=sticker))
+    await eventually(lambda: len(harness.events.messages) == 2)
+    by_kind = {m.media.kind: m for m in harness.events.messages if m.media}
+    assert by_kind["photo"].text == "смотрите"
+    assert (by_kind["photo"].media.width, by_kind["photo"].media.height) == (800, 600)  # type: ignore[union-attr]
+    assert by_kind["sticker"].text == ""
+    for message in harness.events.messages:
+        assert message.media is not None
+        assert "mid" not in message.media.key and message.media.key != "s"
+    assert await harness.storage.media_file(by_kind["photo"].media.key) == "mid"  # type: ignore[union-attr]
+
+
+async def test_other_media_stay_placeholders(harness: Harness) -> None:
+    video = {"file_id": "v", "file_unique_id": "vu", "width": 1, "height": 1, "duration": 3}
+    await harness.feed(group_message(1, None, video=video, caption="клип"))
+    animated = {
+        "file_id": "a",
+        "file_unique_id": "au",
+        "type": "regular",
+        "width": 512,
+        "height": 512,
+        "is_animated": True,
+        "is_video": False,
+    }
+    await harness.feed(group_message(2, None, sticker=animated))
+    await eventually(lambda: len(harness.events.messages) == 2)
+    texts = sorted(message.text for message in harness.events.messages)
+    assert texts == ["[видео] клип", "[стикер]"]
+    assert all(message.media is None for message in harness.events.messages)
 
 
 async def test_other_chats_and_service_messages_are_ignored(harness: Harness) -> None:

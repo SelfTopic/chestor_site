@@ -125,7 +125,7 @@ class GroupMessage(MessageHandler[ChatContext[Message]]):
     query = InGroup()
 
     async def handle(self) -> None:
-        incoming = to_incoming(self.ctx.message, self.ctx.bot.id)
+        incoming = to_incoming(self.ctx.message, self.ctx.bot.id, with_media=True)
         if incoming is not None:
             await self.ctx.chat_service.ingest(incoming)
 

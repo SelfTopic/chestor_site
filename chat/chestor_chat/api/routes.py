@@ -13,6 +13,7 @@ from ..models import SiteSender
 from ..security import PassSigner, hash_ip
 from ..services.captcha import CaptchaService
 from ..services.chat import ChatService
+from ..services.media import MediaService
 from ..validation import clean_nick
 from .hub import WebSocketHub
 
@@ -30,6 +31,7 @@ class Deps:
     hub: WebSocketHub
     signer: PassSigner
     clock: Callable[[], float]
+    media: MediaService
 
 
 DEPS = web.AppKey("deps", Deps)
@@ -212,6 +214,22 @@ async def websocket(request: web.Request) -> web.StreamResponse:
     return socket
 
 
+async def media(request: web.Request) -> web.Response:
+    deps = _deps(request)
+    data, content_type = await deps.media.get(
+        request.match_info["key"], _sender(request, deps).ip_hash
+    )
+    return web.Response(
+        body=data,
+        content_type=content_type,
+        headers={
+            "Cache-Control": "public, max-age=604800, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'",
+        },
+    )
+
+
 def setup_routes(app: web.Application) -> None:
     app.router.add_get("/chat/health", health)
     app.router.add_get("/chat/history", history)
@@ -219,3 +237,4 @@ def setup_routes(app: web.Application) -> None:
     app.router.add_get("/chat/captcha", captcha_question)
     app.router.add_post("/chat/captcha", captcha_answer)
     app.router.add_get("/chat/ws", websocket)
+    app.router.add_get("/chat/media/{key:[A-Za-z0-9_-]{16,64}}", media)

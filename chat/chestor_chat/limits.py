@@ -27,6 +27,12 @@ class Limits:
     captcha_attempts: int = 10
     captcha_attempts_window: int = 600
 
+    media_max_bytes: int = 5 * 1024 * 1024
+    media_cache_bytes: int = 32 * 1024 * 1024
+    media_hourly: int = 300
+    media_ttl: int = 7 * 24 * 3600
+    photo_max_side: int = 1280
+
     ws_per_ip: int = 5
     ws_total: int = 500
     body_max_bytes: int = 16 * 1024

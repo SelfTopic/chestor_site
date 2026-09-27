@@ -93,5 +93,12 @@ class RedisStorage:
         raw = await self._redis.get(PREFIX + f"relay:{tg_message_id}")
         return RelayRecord.from_json(json.loads(raw)) if raw else None
 
+    async def put_media(self, key: str, file_id: str, ttl: int) -> None:
+        await self._redis.set(PREFIX + "media:" + key, file_id, ex=ttl)
+
+    async def media_file(self, key: str) -> str | None:
+        value = await self._redis.get(PREFIX + "media:" + key)
+        return str(value) if value is not None else None
+
     async def close(self) -> None:
         await self._redis.aclose()

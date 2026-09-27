@@ -49,3 +49,8 @@ class ChallengeExpired(ChatError):
 class QuizUnavailable(ChatError):
     code = "quiz_unavailable"
     status = 503
+
+
+class MediaNotFound(ChatError):
+    code = "media_not_found"
+    status = 404
