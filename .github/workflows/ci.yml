@@ -42,4 +42,5 @@ jobs:
       - run: poetry run ruff check .
       - run: poetry run ruff format --check .
       - run: poetry run pyright
+      - run: poetry run selfrot check --strict --package chestor_chat/telegram chestor_chat.telegram.bot:ChatDispatcher
       - run: poetry run pytest
