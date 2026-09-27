@@ -8,6 +8,7 @@ import { useDeferredValue, useState } from "react";
 import { Avatar } from "@/components/tg/Avatar";
 import { dialogHref, type DialogMeta } from "@/content/dialogs";
 import { UI } from "@/content/ui";
+import { previewText } from "@/lib/chatApi";
 import { useLive } from "@/lib/liveStore";
 import { formatTime } from "@/lib/time";
 
@@ -44,7 +45,7 @@ export function DialogList({ dialogs }: { dialogs: DialogMeta[] }) {
           const href = dialogHref(dialog.id);
           const active = pathname === href || (pathname === "/" && dialog.id === "self");
           const isLive = dialog.id === "live";
-          const preview = isLive && lastLive ? { author: lastLive.author, text: lastLive.text } : dialog.preview;
+          const preview = isLive && lastLive ? { author: lastLive.author, text: previewText(lastLive) } : dialog.preview;
           const time = isLive && lastLive ? formatTime(new Date(lastLive.ts * 1000)) : dialog.time;
           return (
             <li key={dialog.id}>

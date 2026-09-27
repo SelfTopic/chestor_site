@@ -16,6 +16,7 @@ import { formatTime } from "@/lib/time";
 import { useStoredNick } from "@/lib/useStoredNick";
 
 import { CaptchaPanel } from "./CaptchaPanel";
+import { LiveImage } from "./LiveImage";
 import styles from "./LiveChat.module.css";
 import { NickForm } from "./NickForm";
 
@@ -171,6 +172,7 @@ export function LiveChat() {
                   tail={lastInGroup}
                   read={mine ? true : undefined}
                 >
+                  {message.media ? <LiveImage media={message.media} /> : null}
                   {message.text}
                 </MessageBubble>
               </div>

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { backoffDelay, type LiveMessage, mergeMessages, settlePending, websocketUrl } from "./chatApi";
+import { backoffDelay, type LiveMessage, mediaUrl, mergeMessages, previewText, settlePending, websocketUrl } from "./chatApi";
 import { checkNick } from "./nick";
 
 const message = (id: string, ts: number, clientId: string | null = null): LiveMessage => ({
@@ -57,4 +57,12 @@ describe("checkNick", () => {
     expect(checkNick("<script>").ok).toBe(false);
     expect(checkNick("гуль🦴").ok).toBe(false);
   });
+});
+
+test("превью медиа и адрес картинки", () => {
+  const photo = { ...message("tg:1", 1), text: "", media: { key: "abc_-1", kind: "photo" as const, width: 10, height: 10 } };
+  expect(previewText(photo)).toBe("[фото]");
+  expect(previewText({ ...photo, text: "смотрите" })).toBe("[фото] смотрите");
+  expect(previewText(message("tg:2", 2))).toBe("tg:2");
+  expect(mediaUrl(photo.media)).toBe("/chat/media/abc_-1");
 });

@@ -85,6 +85,19 @@
   width: 34px;
 }
 
+.media {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2px 0 4px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-sunken);
+}
+
+.media[data-kind="sticker"] {
+  background: transparent;
+}
+
 .failed {
   display: block;
   margin-top: 4px;

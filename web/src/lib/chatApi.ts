@@ -1,6 +1,8 @@
 // Браузер ходит только в свой бэкенд: /chat/* (в dev — rewrites на localhost:8080).
 export type Quote = { author: string; text: string };
 
+export type LiveMedia = { key: string; kind: "photo" | "sticker"; width: number; height: number };
+
 export type LiveMessage = {
   id: string;
   source: "telegram" | "site";
@@ -9,6 +11,7 @@ export type LiveMessage = {
   ts: number;
   quote: Quote | null;
   client_id: string | null;
+  media?: LiveMedia | null;
 };
 
 export type ChatMode = "mock" | "telegram";
@@ -127,4 +130,16 @@ export function newClientId(): string {
   const bytes = new Uint8Array(9);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+const MEDIA_LABEL: Record<LiveMedia["kind"], string> = { photo: "[фото]", sticker: "[стикер]" };
+
+// Для превью в списке диалогов: у картинки без подписи текста нет.
+export function previewText(message: LiveMessage): string {
+  if (!message.media) return message.text;
+  return message.text ? `${MEDIA_LABEL[message.media.kind]} ${message.text}` : MEDIA_LABEL[message.media.kind];
+}
+
+export function mediaUrl(media: LiveMedia): string {
+  return `/chat/media/${encodeURIComponent(media.key)}`;
 }
