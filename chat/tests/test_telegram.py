@@ -27,6 +27,9 @@ class Events:
     async def message(self, message: ChatMessage) -> None:
         self.messages.append(message)
 
+    async def typing(self, author: str) -> None:
+        return None
+
 
 @pytest.fixture
 async def telegram(monkeypatch: pytest.MonkeyPatch) -> AsyncIterator[FakeTelegram]:

@@ -39,11 +39,16 @@ class WebSocketHub:
     async def message(self, message: ChatMessage) -> None:
         await self.broadcast({"type": "message", "message": message.to_json()})
 
-    async def broadcast(self, event: dict[str, Any]) -> None:
-        if not self._sockets:
+    async def typing(self, author: str, exclude: web.WebSocketResponse | None = None) -> None:
+        await self.broadcast({"type": "typing", "nick": author}, exclude=exclude)
+
+    async def broadcast(
+        self, event: dict[str, Any], exclude: web.WebSocketResponse | None = None
+    ) -> None:
+        sockets = [socket for socket in self._sockets if socket is not exclude]
+        if not sockets:
             return
         payload = json.dumps(event, ensure_ascii=False)
-        sockets = list(self._sockets)
         results = await asyncio.gather(
             *(socket.send_str(payload) for socket in sockets), return_exceptions=True
         )

@@ -13,6 +13,7 @@ from ..models import SiteSender
 from ..security import PassSigner, hash_ip
 from ..services.captcha import CaptchaService
 from ..services.chat import ChatService
+from ..validation import clean_nick
 from .hub import WebSocketHub
 
 logger = logging.getLogger(__name__)
@@ -153,6 +154,27 @@ async def captcha_answer(request: web.Request) -> web.Response:
     return response
 
 
+# «Печатает…» шлют только прошедшие капчу, не чаще раза в 2 с с одного сокета.
+TYPING_EVERY = 2.0
+
+
+def typing_nick(raw: str, deps: Deps) -> str | None:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+    if (
+        not isinstance(data, dict)
+        or data.get("type") != "typing"
+        or not isinstance(data.get("nick"), str)
+    ):
+        return None
+    try:
+        return clean_nick(data["nick"], limits=deps.limits)
+    except InvalidInput:
+        return None
+
+
 async def websocket(request: web.Request) -> web.StreamResponse:
     deps = _deps(request)
     ip_hash = _sender(request, deps).ip_hash
@@ -162,9 +184,11 @@ async def websocket(request: web.Request) -> web.StreamResponse:
     ):
         return web.json_response({"error": {"code": "too_many_connections"}}, status=429)
 
+    sender = _sender(request, deps)
     socket = web.WebSocketResponse(heartbeat=30, max_msg_size=1024)
     await socket.prepare(request)
     await deps.hub.add(socket, ip_hash)
+    last_typing = 0.0
     try:
         await socket.send_json(
             {"type": "hello", "online": deps.hub.online, "mode": deps.settings.chat_mode}
@@ -174,6 +198,13 @@ async def websocket(request: web.Request) -> web.StreamResponse:
             # Клиент ничего не шлёт, кроме ping: отправка идёт через POST /chat/send.
             if message.type == WSMsgType.TEXT and message.data == "ping":
                 await socket.send_str('{"type":"pong"}')
+            elif message.type == WSMsgType.TEXT and sender.pass_id is not None:
+                now = deps.clock()
+                if now - last_typing >= TYPING_EVERY:
+                    nick = typing_nick(message.data, deps)
+                    if nick is not None:
+                        last_typing = now
+                        await deps.hub.typing(nick, exclude=socket)
             elif message.type == WSMsgType.ERROR:
                 break
     finally:

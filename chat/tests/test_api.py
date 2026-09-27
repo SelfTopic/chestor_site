@@ -156,3 +156,29 @@ async def test_online_counter(client: Client) -> None:
         event = await first.receive_json(timeout=2)
     await first.close()
     await asyncio.sleep(0)
+
+
+async def test_typing_is_relayed_to_others_only_with_pass(client: Client) -> None:
+    watcher = await client.ws_connect("/chat/ws")
+    await watcher.receive_json(timeout=2)
+
+    anonymous = await client.ws_connect("/chat/ws")
+    await anonymous.send_str('{"type": "typing", "nick": "Аноним"}')
+
+    await pass_captcha(client)
+    typist = await client.ws_connect("/chat/ws")
+    await typist.send_str('{"type": "typing", "nick": "Канеки"}')
+    await typist.send_str('{"type": "typing", "nick": "Канеки"}')  # слишком часто — не уйдёт
+    await typist.send_str('{"type": "typing", "nick": "Self"}')
+
+    typing = []
+    try:
+        while True:
+            event = await watcher.receive_json(timeout=0.5)
+            if event["type"] == "typing":
+                typing.append(event["nick"])
+    except TimeoutError:
+        pass
+    assert typing == ["Канеки"]
+    for socket in (watcher, anonymous, typist):
+        await socket.close()

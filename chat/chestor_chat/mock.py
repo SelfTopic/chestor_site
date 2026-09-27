@@ -50,13 +50,16 @@ class MockGroup:
         return message_id
 
     async def _reply(self, nick: str, text: str, message_id: int) -> None:
-        await asyncio.sleep(self._rng.uniform(1.5, 4))
+        await asyncio.sleep(self._rng.uniform(0.5, 1.5))
         if self.chat is None:
             return
+        author = self._rng.choice(MEMBERS)
+        await self.chat.typing(author)
+        await asyncio.sleep(self._rng.uniform(1.5, 3))
         await self.chat.ingest(
             IncomingMessage(
                 tg_message_id=next(self._ids),
-                author=self._rng.choice(MEMBERS),
+                author=author,
                 text=self._rng.choice(REPLIES).format(nick=nick),
                 ts=time.time(),
                 reply_to_tg_id=message_id,

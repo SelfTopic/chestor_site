@@ -103,6 +103,9 @@ class ChatService:
             )
         )
 
+    async def typing(self, author: str) -> None:
+        await self._events.typing(author)
+
     async def _publish(self, message: ChatMessage) -> None:
         await self._storage.add_message(message, self._limits.history_size)
         await self._events.message(message)

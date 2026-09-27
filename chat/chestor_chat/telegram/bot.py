@@ -134,6 +134,9 @@ class _NoEvents:
     async def message(self, message: ChatMessage) -> None:
         return None
 
+    async def typing(self, author: str) -> None:
+        return None
+
 
 @dataclass(frozen=True)
 class BotDeps:

@@ -6,6 +6,9 @@ from ..models import ChatMessage
 class ChatEvents(Protocol):
     async def message(self, message: ChatMessage) -> None: ...
 
+    # «Печатает…»: не хранится, только рассылается открытым вкладкам.
+    async def typing(self, author: str) -> None: ...
+
 
 class GatewayRetryAfter(Exception):
     def __init__(self, seconds: float) -> None:
