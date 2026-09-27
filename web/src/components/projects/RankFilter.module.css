@@ -1,0 +1,67 @@
+.bar {
+  position: sticky;
+  top: calc(var(--space-4) * -1);
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: calc(var(--space-4) * -1) calc(var(--space-3) * -1) 0;
+  padding: var(--space-3) var(--space-3) var(--space-2);
+  background: linear-gradient(var(--color-chat-bg) 70%, transparent);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 14px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-service);
+  color: var(--color-on-service);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.chip[aria-pressed="true"] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  box-shadow: var(--glow);
+}
+
+.count {
+  font-size: var(--text-xs);
+  opacity: 0.75;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feed:not([data-filter="all"]) [data-rank] > * {
+  display: none;
+}
+
+.feed[data-filter="SSS"] [data-rank="SSS"] > *,
+.feed[data-filter="SS"] [data-rank="SS"] > *,
+.feed[data-filter="S"] [data-rank="S"] > *,
+.feed[data-filter="A"] [data-rank="A"] > *,
+.feed[data-filter="B"] [data-rank="B"] > * {
+  display: flex;
+}
+
+/* Эпоха без подходящих постов прячется вместе с подписью. */
+.feed[data-filter="SSS"] [data-era]:not(:has([data-rank="SSS"])),
+.feed[data-filter="SS"] [data-era]:not(:has([data-rank="SS"])),
+.feed[data-filter="S"] [data-era]:not(:has([data-rank="S"])),
+.feed[data-filter="A"] [data-era]:not(:has([data-rank="A"])),
+.feed[data-filter="B"] [data-era]:not(:has([data-rank="B"])),
+.feed:not([data-filter="all"]) [data-extra] {
+  display: none;
+}
