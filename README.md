@@ -41,7 +41,7 @@ cd chat && poetry run selfrot check --strict --package chestor_chat/telegram che
 
 # глазами: скриншоты 1440/390 в обеих темах и аудит доступности (нужен запущенный сайт)
 cd web && node scripts/screenshots.mjs http://localhost:3000 / /c/live /bot
-cd web && node scripts/a11y.mjs
+cd web && node scripts/a11y.mjs && node scripts/smoke.mjs
 ```
 
 Те же проверки запускает GitHub Actions на каждый push и pull request.
