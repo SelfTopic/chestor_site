@@ -58,7 +58,7 @@
   --color-bg-active: #3390ec;
   --color-on-active: #ffffff;
   --color-chat-bg: #dce6ef;
-  --color-chat-pattern: rgba(51, 144, 236, 0.13);
+  --color-chat-pattern: rgba(51, 144, 236, 0.09);
 
   --color-text: #0f0f0f;
   --color-text-muted: #6b7075;
@@ -113,7 +113,7 @@
   --color-bg-active: #6e0f22;
   --color-on-active: #fff1f3;
   --color-chat-bg: #080607;
-  --color-chat-pattern: rgba(214, 31, 60, 0.1);
+  --color-chat-pattern: rgba(214, 31, 60, 0.075);
 
   --color-text: #f1e9ea;
   --color-text-muted: #a19295;
@@ -156,3 +156,20 @@
   --focus-ring: 0 0 0 3px rgba(255, 51, 85, 0.55);
   --scrollbar: rgba(255, 255, 255, 0.16);
 }
+
+/* Цвета ников (как в группах Telegram): data-tone = хэш имени по модулю 7. */
+[data-tone="0"] { --tone: #e2574c; }
+[data-tone="1"] { --tone: #d98a00; }
+[data-tone="2"] { --tone: #7b61ff; }
+[data-tone="3"] { --tone: #2ea44f; }
+[data-tone="4"] { --tone: #00a3a3; }
+[data-tone="5"] { --tone: #2a86d6; }
+[data-tone="6"] { --tone: #c04ad8; }
+
+:root[data-theme="ghoul"] [data-tone="0"] { --tone: #ff5c75; }
+:root[data-theme="ghoul"] [data-tone="1"] { --tone: #ff9a3c; }
+:root[data-theme="ghoul"] [data-tone="2"] { --tone: #b58cff; }
+:root[data-theme="ghoul"] [data-tone="3"] { --tone: #6fd08f; }
+:root[data-theme="ghoul"] [data-tone="4"] { --tone: #4fd1c5; }
+:root[data-theme="ghoul"] [data-tone="5"] { --tone: #7ab8ff; }
+:root[data-theme="ghoul"] [data-tone="6"] { --tone: #f08bd9; }

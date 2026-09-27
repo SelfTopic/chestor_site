@@ -1,0 +1,53 @@
+.shell {
+  display: flex;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.sidebar {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: var(--sidebar-width);
+  min-height: 0;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.pane {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+@media (max-width: 1200px) {
+  .shell {
+    --sidebar-width: 320px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    border-right: 0;
+  }
+
+  .shell[data-dialog-open="true"] .sidebar,
+  .shell[data-dialog-open="false"] .pane {
+    display: none;
+  }
+
+  .shell[data-dialog-open="true"] .pane {
+    animation: slide-in var(--duration-base) var(--ease-out);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0.4;
+    transform: translateX(24px);
+  }
+}

@@ -12,6 +12,6 @@
   z-index: -1;
   background: var(--color-chat-pattern);
   mask: url("/pattern.svg") repeat;
-  mask-size: 300px;
+  mask-size: 240px;
   pointer-events: none;
 }
