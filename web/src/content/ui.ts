@@ -6,4 +6,5 @@ export const UI = {
   pinned: "Закреплено",
   footer: "chestor.site · собрано вручную, без шаблонов",
   emptyPane: "Выбери диалог слева",
+  skipToDialog: "К открытому диалогу",
 } as const;

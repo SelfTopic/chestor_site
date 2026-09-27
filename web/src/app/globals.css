@@ -50,6 +50,12 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Ссылка внутри текста отличается не только цветом. */
+p a:not([class]) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 button,
 input,
 textarea,

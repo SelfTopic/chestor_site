@@ -43,7 +43,7 @@ export function ProjectsChannel() {
           ))}
           <div data-extra className={styles.era}>
             <ChannelPost id="ecosystem" channel="Проекты" glyph="projects" time="сен 2026">
-              <h3 className={styles.ecoTitle}>Экосистема chestor.site</h3>
+              <h2 className={styles.ecoTitle}>Экосистема chestor.site</h2>
               <p>
                 Всё крутится вокруг одного домена: фреймворк, бот, база вопросов и тестовый стенд. Этот сайт — тоже часть
                 схемы: его чат работает на selfrotgram, а викторина — на ghoul-quiz-lib.

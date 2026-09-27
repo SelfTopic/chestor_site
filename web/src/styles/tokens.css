@@ -55,22 +55,23 @@
   --color-bg-elevated: #ffffff;
   --color-bg-sunken: #f4f4f5;
   --color-bg-hover: #f1f3f5;
-  --color-bg-active: #3390ec;
+  --color-bg-active: #2477cc;
   --color-on-active: #ffffff;
   --color-chat-bg: #dce6ef;
   --color-chat-pattern: rgba(51, 144, 236, 0.09);
 
   --color-text: #0f0f0f;
-  --color-text-muted: #6b7075;
-  --color-text-faint: #8a8f94;
+  --color-text-muted: #5d6166;
+  --color-text-faint: #676d72;
   --color-border: #e3e5e8;
   --color-border-strong: #c9cdd2;
 
-  --color-accent: #3390ec;
-  --color-accent-strong: #1f7bd8;
+  --color-accent: #2477cc;
+  --color-accent-strong: #1b6ec2;
+  --color-accent-text: #1665b5;
   --color-accent-soft: rgba(51, 144, 236, 0.12);
   --color-on-accent: #ffffff;
-  --color-link: #2a7fd4;
+  --color-link: #1a6bbd;
 
   --color-bubble-in: #ffffff;
   --color-bubble-out: #d9ecff;
@@ -84,7 +85,7 @@
   --color-danger: #e53935;
   --color-success: #2eaa5a;
   --color-warning: #d98a00;
-  --color-badge: #3390ec;
+  --color-badge: #2477cc;
   --color-badge-muted: #a8b0b8;
 
   --rank-sss: #c2185b;
@@ -121,8 +122,9 @@
   --color-border: #2a1f22;
   --color-border-strong: #3d2c30;
 
-  --color-accent: #e2203f;
-  --color-accent-strong: #ff3355;
+  --color-accent: #d21c3a;
+  --color-accent-strong: #ff4d66;
+  --color-accent-text: #ff4d66;
   --color-accent-soft: rgba(226, 32, 63, 0.16);
   --color-on-accent: #ffffff;
   --color-link: #ff5c75;
@@ -139,7 +141,7 @@
   --color-danger: #ff4d6a;
   --color-success: #4fc27a;
   --color-warning: #f0a830;
-  --color-badge: #e2203f;
+  --color-badge: #d21c3a;
   --color-badge-muted: #5a4a4e;
 
   --rank-sss: #ff1f45;
@@ -182,7 +184,7 @@
   --syntax-text: #1f2933;
   --syntax-keyword: #7c3aed;
   --syntax-string: #0f7b3f;
-  --syntax-comment: #7b8794;
+  --syntax-comment: #626e77;
   --syntax-number: #b45309;
   --syntax-type: #1f6fd1;
   --syntax-func: #b8325a;
@@ -200,7 +202,7 @@
   --syntax-text: #eadfe1;
   --syntax-keyword: #ff5c75;
   --syntax-string: #e9b97a;
-  --syntax-comment: #7d6a6e;
+  --syntax-comment: #998589;
   --syntax-number: #ff9a3c;
   --syntax-type: #f2a6b3;
   --syntax-func: #ffd1d8;

@@ -16,7 +16,7 @@
 }
 
 :global(:root[data-theme="ghoul"]) .brand {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-shadow: var(--glow);
 }
 

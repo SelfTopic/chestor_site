@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 
+import { UI } from "@/content/ui";
 import { setLiveViewing, startLive } from "@/lib/liveStore";
 
 import styles from "./Shell.module.css";
@@ -17,8 +18,13 @@ export function ShellFrame({ sidebar, children }: { sidebar: ReactNode; children
   useEffect(() => setLiveViewing(pathname === "/c/live"), [pathname]);
   return (
     <div className={styles.shell} data-dialog-open={dialogOpen}>
+      <a href="#dialog" className={styles.skip}>
+        {UI.skipToDialog}
+      </a>
       <aside className={styles.sidebar}>{sidebar}</aside>
-      <main className={styles.pane}>{children}</main>
+      <main className={styles.pane} id="dialog" tabIndex={-1}>
+        {children}
+      </main>
     </div>
   );
 }

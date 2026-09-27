@@ -83,7 +83,7 @@
 }
 
 .send:hover:not(:disabled) {
-  background: var(--color-accent-strong);
+  filter: brightness(1.1);
 }
 
 .send:active:not(:disabled) {

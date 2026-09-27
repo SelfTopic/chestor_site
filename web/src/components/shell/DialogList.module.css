@@ -21,7 +21,7 @@
 .search:focus-within {
   border-color: var(--color-accent);
   background: var(--color-bg);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .searchInput {
@@ -110,7 +110,6 @@
 .item[data-active] .previewAuthor,
 .item[data-active] .pin {
   color: inherit;
-  opacity: 0.85;
 }
 
 .pin {

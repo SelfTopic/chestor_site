@@ -11,7 +11,7 @@ function Diagram({ layout, className, markerId }: { layout: EcoLayout; className
     <svg
       viewBox={`0 0 ${layout.width} ${layout.height}`}
       className={`${styles.svg} ${className}`}
-      role="img"
+      role="group"
       aria-label="Схема экосистемы: selfrotgram и ghoul-quiz-lib питают chestor_bot и этот сайт, ghoul-quiz-lib ходит в Ghoul API, userbot-api проверяет chestor_bot"
     >
       <defs>

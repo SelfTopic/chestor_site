@@ -17,7 +17,7 @@ export function SelfrotChannel() {
       <Thread dialogId="selfrotgram" label="Канал selfrotgram" placeholder="Комментировать…">
         {SR_CHANNEL_POSTS.map((post) => (
           <ChannelPost key={post.id} id={post.id} channel="selfrotgram" glyph="selfrotgram" time={post.dated}>
-            <h3 className={styles.title}>{post.title}</h3>
+            <h2 className={styles.title}>{post.title}</h2>
             <p>{post.text}</p>
             {post.code ? <CodeBlock code={post.code} /> : null}
             {post.cta ? (

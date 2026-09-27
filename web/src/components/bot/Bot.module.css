@@ -62,7 +62,7 @@
 }
 
 :global(:root[data-theme="ghoul"]) .object {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   text-shadow: var(--glow);
 }
 
@@ -110,7 +110,7 @@
 .status {
   margin-top: var(--space-5);
   font-family: var(--font-mono);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 600;
 }
 
@@ -248,14 +248,14 @@
 .tier[data-tier="0"],
 .dot[data-tier="0"] { background: #7a0a1c; }
 .tier[data-tier="1"],
-.dot[data-tier="1"] { background: #c2185b; }
+.dot[data-tier="1"] { background: #a8174a; }
 .tier[data-tier="2"],
-.dot[data-tier="2"] { background: #e8833a; }
+.dot[data-tier="2"] { background: #b3531f; }
 .tier[data-tier="3"],
-.dot[data-tier="3"] { background: #2eaa5a; }
+.dot[data-tier="3"] { background: #1f7a45; }
 
 .tierRange {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
 }
 
 .table {
@@ -349,7 +349,7 @@
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 /* ——— Кагуне ——— */
@@ -412,7 +412,7 @@
 .stats {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .callout {
@@ -442,8 +442,7 @@
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 800;
-  color: var(--color-accent);
-  opacity: 0.6;
+  color: var(--color-accent-text);
 }
 
 .formula {
@@ -458,7 +457,7 @@
 .formula code {
   font-size: clamp(0.95rem, 2.4vw, 1.3rem);
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   overflow-wrap: anywhere;
 }
 
@@ -473,7 +472,7 @@
   font-family: var(--font-display);
   font-size: var(--text-2xl);
   font-weight: 800;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .coin p {
@@ -581,7 +580,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-2xl);
   font-weight: 800;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   white-space: nowrap;
 }
 

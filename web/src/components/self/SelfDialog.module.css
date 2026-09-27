@@ -35,7 +35,7 @@
 }
 
 .role {
-  color: var(--color-accent);
+  color: var(--color-accent-text);
   font-weight: 500;
 }
 
@@ -84,7 +84,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 .chips {
@@ -118,5 +118,5 @@
   font-family: var(--font-display);
   font-size: 3.5rem;
   line-height: 1;
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }

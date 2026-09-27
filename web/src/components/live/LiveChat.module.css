@@ -309,7 +309,7 @@
 
 .captchaNote {
   font-size: var(--text-sm);
-  color: var(--color-accent);
+  color: var(--color-accent-text);
 }
 
 @media (prefers-reduced-motion: reduce) {

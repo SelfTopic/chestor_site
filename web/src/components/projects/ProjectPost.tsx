@@ -26,9 +26,9 @@ export function ProjectPost({ project }: { project: Project }) {
           </span>
         }
       >
-        <h3 className={styles.title}>
+        <h2 className={styles.title}>
           {project.title} <span className={styles.lang}>{project.lang}</span>
-        </h3>
+        </h2>
         <p className={styles.tagline}>{project.tagline}</p>
         <p>
           <RichText text={project.summary} />
