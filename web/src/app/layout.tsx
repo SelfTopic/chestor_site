@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Onest, Unbounded } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { SITE_URL } from "@/lib/site";
 import { THEME_COLOR, themeInitScript } from "@/lib/theme";
 
 import "./globals.css";
@@ -20,8 +21,15 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  title: "CheStor",
-  description: "Self — бэкенд, Telegram-боты и «Токийский гуль».",
+  metadataBase: new URL(SITE_URL),
+  title: { default: "CheStor — Self в виде Telegram-клиента", template: "%s · CheStor" },
+  description:
+    "Self (CheStor): бэкенд на Python, Telegram-боты, свой фреймворк selfrotgram и «Токийский гуль». Сайт — это Telegram-клиент с живым чатом.",
+  applicationName: "CheStor",
+  authors: [{ name: "Self", url: "https://github.com/SelfTopic" }],
+  openGraph: { type: "website", siteName: "CheStor", locale: "ru_RU" },
+  twitter: { card: "summary_large_image" },
+  alternates: { canonical: "/" },
 };
 
 export const viewport: Viewport = {

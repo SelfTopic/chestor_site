@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: PageProps<"/c/[id]">): Promis
   const { id } = await params;
   if (!isDialogId(id)) return {};
   const dialog = DIALOGS[id];
-  return { title: `${dialog.title} · CheStor`, description: dialog.description };
+  return { title: dialog.title, description: dialog.description, alternates: { canonical: `/c/${id}` } };
 }
 
 export default async function DialogPage({ params }: PageProps<"/c/[id]">) {

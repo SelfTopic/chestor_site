@@ -19,7 +19,8 @@ import { Section } from "@/components/landing/Section";
 import { BOT_REPO } from "@/content/bot";
 
 export const metadata: Metadata = {
-  title: "chestor_bot — досье CCG · CheStor",
+  title: "chestor_bot — досье CCG",
+  alternates: { canonical: "/bot" },
   description:
     "RPG-бот в Telegram по «Токийскому гулю»: голод, кагуне, честный боевой движок, CheSton и RC-клетки. Версия 1.0.0.",
 };

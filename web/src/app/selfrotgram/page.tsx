@@ -12,7 +12,8 @@ import { Terminal } from "@/components/selfrot/Terminal";
 import { GUARANTEES, SR_FACTS, SR_FEATURES, SR_HERO, SR_LINKS, SR_MISSING } from "@/content/selfrotgram";
 
 export const metadata: Metadata = {
-  title: "selfrotgram — типы говорят правду · CheStor",
+  title: "selfrotgram — типы говорят правду",
+  alternates: { canonical: "/selfrotgram" },
   description:
     "Асинхронная библиотека для Telegram Bot API на aiohttp и pydantic: фильтр гарантирует, тип обещает, библиотека сверяет при импорте.",
 };
