@@ -42,6 +42,7 @@ class ChatContext(BaseContext[TEvent]):
     moderation: ModerationService
     group_id: int
     admins: AdminCache
+    show_media: bool = True
 
 
 class InGroup(BaseFilter[BaseContext[Any]]):
@@ -125,7 +126,7 @@ class GroupMessage(MessageHandler[ChatContext[Message]]):
     query = InGroup()
 
     async def handle(self) -> None:
-        incoming = to_incoming(self.ctx.message, self.ctx.bot.id, with_media=True)
+        incoming = to_incoming(self.ctx.message, self.ctx.bot.id, with_media=self.ctx.show_media)
         if incoming is not None:
             await self.ctx.chat_service.ingest(incoming)
 
@@ -143,6 +144,7 @@ class BotDeps:
     chat_service: ChatService
     moderation: ModerationService
     group_id: int
+    show_media: bool = True
 
     @classmethod
     def inspection(cls) -> "BotDeps":
@@ -166,12 +168,19 @@ class ChatDispatcher(BaseDispatcher[ChatContext[Any]]):
         self.chat_service = deps.chat_service
         self.moderation = deps.moderation
         self.group_id = deps.group_id
+        self.show_media = deps.show_media
         self.admins = AdminCache()
         self._polling = polling
 
     def create_context(self, update: Update) -> ChatContext[Any]:
         return self.context(
-            update, self.api, self.chat_service, self.moderation, self.group_id, self.admins
+            update,
+            self.api,
+            self.chat_service,
+            self.moderation,
+            self.group_id,
+            self.admins,
+            self.show_media,
         )
 
     async def on_startup(self) -> None:

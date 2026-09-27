@@ -254,3 +254,19 @@ async def test_moderation_commands_do_not_leak_to_site(
     await harness.feed(group_message(50, "/mute_site 1", user_id=1))
     await eventually(lambda: len(telegram.sent()) == 1)
     assert harness.events.messages == []
+
+
+async def test_media_can_be_switched_off(telegram: FakeTelegram) -> None:
+    storage = MemoryStorage()
+    events = Events()
+    chat = ChatService(storage, events, Limits())
+    dispatcher = ChatDispatcher(
+        TOKEN, BotDeps(chat, ModerationService(storage), GROUP_ID, show_media=False)
+    )
+    await dispatcher.api.load_me()
+    photo = [{"file_id": "f", "file_unique_id": "u", "width": 10, "height": 10}]
+    update = group_message(1, None, photo=photo, caption="без картинки")
+    await dispatcher.feed_update(Update.model_validate(update, context={"bot": dispatcher.api}))
+    await eventually(lambda: len(events.messages) == 1)
+    assert events.messages[0].media is None and events.messages[0].text == "[фото] без картинки"
+    await dispatcher.api.close_session()

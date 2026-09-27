@@ -73,7 +73,7 @@ def create_app(
         assert settings.bot_token and settings.chat_id is not None
         dispatcher = ChatDispatcher(
             settings.bot_token,
-            BotDeps(chat, moderation, settings.chat_id),
+            BotDeps(chat, moderation, settings.chat_id, show_media=settings.show_media),
             polling=settings.is_dev,
         )
         telegram_gateway = TelegramGateway(dispatcher.api, settings.chat_id)
