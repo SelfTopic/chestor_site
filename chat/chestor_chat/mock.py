@@ -1,11 +1,52 @@
 import asyncio
 import contextlib
 import itertools
+import math
 import random
+import struct
 import time
+import zlib
+from collections.abc import Callable
 
-from .models import IncomingMessage
+from .models import IncomingMessage, MediaRef
 from .services.chat import ChatService
+
+DEMO_PHOTO_ID = "mock-photo"
+
+
+def _png(width: int, height: int, pixel: Callable[[int, int], tuple[int, int, int]]) -> bytes:
+    rows = b"".join(
+        b"\x00" + b"".join(bytes(pixel(x, y)) for x in range(width)) for y in range(height)
+    )
+
+    def chunk(kind: bytes, data: bytes) -> bytes:
+        body = kind + data
+        return struct.pack(">I", len(data)) + body + struct.pack(">I", zlib.crc32(body))
+
+    header = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+    return (
+        b"\x89PNG\r\n\x1a\n"
+        + chunk(b"IHDR", header)
+        + chunk(b"IDAT", zlib.compress(rows))
+        + chunk(b"IEND", b"")
+    )
+
+
+def demo_photo() -> bytes:
+    # Своя картинка для демо: какуган на тёмном фоне, никаких кадров из аниме.
+    width, height = 240, 160
+
+    def pixel(x: int, y: int) -> tuple[int, int, int]:
+        dx, dy = (x - width / 2) / 1.6, y - height / 2
+        distance = math.hypot(dx, dy)
+        if distance < 22:
+            return (255, 31, 61) if distance > 7 else (18, 0, 3)
+        if abs(dy) < 40 - abs(dx) * 0.55:
+            return (8, 4, 6)
+        return (40 + y // 8, 14, 20 + x // 12)
+
+    return _png(width, height, pixel)
+
 
 MEMBERS = ("Тока", "Хинами", "Нишики", "Ута", "Банджо", "Итори")
 
@@ -40,6 +81,12 @@ class MockGroup:
         self._task: asyncio.Task[None] | None = None
         self._pending: set[asyncio.Task[None]] = set()
         self.chat: ChatService | None = None
+        self._photo: bytes | None = None
+
+    async def fetch(self, file_id: str) -> bytes:
+        if self._photo is None:
+            self._photo = demo_photo()
+        return self._photo
 
     async def send(self, nick: str, text: str) -> int:
         message_id = next(self._ids)
@@ -83,6 +130,15 @@ class MockGroup:
         if self.chat is None or await self.chat.history():
             return
         now = time.time()
+        await self.chat.ingest(
+            IncomingMessage(
+                tg_message_id=next(self._ids),
+                author="Ута",
+                text="новая маска, как вам?",
+                ts=now - 700,
+                media=MediaRef(file_id=DEMO_PHOTO_ID, kind="photo", width=240, height=160),
+            )
+        )
         for index, line in enumerate(LINES[:3]):
             await self.chat.ingest(
                 IncomingMessage(

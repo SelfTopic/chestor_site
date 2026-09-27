@@ -21,7 +21,7 @@ async def test_history_describes_mode_and_limits(client: Client) -> None:
     assert body["captcha"] == "fixture"
     assert body["limits"] == {"nick_min": 2, "nick_max": 24, "text_max": 300}
     assert body["pass_expires_at"] is None
-    assert len(body["messages"]) == 3  # демо-группа засевает пару реплик
+    assert len(body["messages"]) == 4  # демо-группа засевает пару реплик и фото
 
 
 async def test_send_requires_captcha(client: Client) -> None:
@@ -182,3 +182,10 @@ async def test_typing_is_relayed_to_others_only_with_pass(client: Client) -> Non
     assert typing == ["Канеки"]
     for socket in (watcher, anonymous, typist):
         await socket.close()
+
+
+async def test_mock_demo_photo_is_a_png(client: Client) -> None:
+    history = await (await client.get("/chat/history")).json()
+    photo = next(message for message in history["messages"] if message["media"])
+    response = await client.get(f"/chat/media/{photo['media']['key']}")
+    assert response.status == 200 and response.headers["Content-Type"] == "image/png"

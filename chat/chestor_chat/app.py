@@ -83,6 +83,7 @@ def create_app(
         mock = MockGroup()
         mock.chat = chat
         gateway = mock
+        fetcher = fetcher or mock
 
     outbox = Outbox(gateway, limits, on_sent=chat.on_sent)
     chat.outbox = outbox
