@@ -23,8 +23,8 @@ for (const viewport of widths) {
     await context.addInitScript((value) => localStorage.setItem("chestor-theme", value), theme);
     const page = await context.newPage();
     for (const path of paths) {
-      await page.goto(base + path, { waitUntil: "networkidle" });
-      await page.waitForTimeout(400);
+      await page.goto(base + path, { waitUntil: "load" });
+      await page.waitForTimeout(1200);
       const slug = path.replace(/\W+/g, "_").replace(/^_|_$/g, "") || "root";
       const file = `screenshots/${slug}-${viewport.name}-${theme}.png`;
       await page.screenshot({ path: file, fullPage: process.env.FULL === "1" });
