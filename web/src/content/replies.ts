@@ -1,6 +1,7 @@
 import type { DialogId } from "./dialogs";
 
-type AutoReply = { text: string; link?: { href: string; label: string } };
+export type ReplyLink = { href: string; label: string };
+export type AutoReply = { text: string; link?: ReplyLink };
 
 export const AUTO_REPLIES: Partial<Record<DialogId, AutoReply>> = {
   self: {
@@ -16,3 +17,31 @@ export const AUTO_REPLIES: Partial<Record<DialogId, AutoReply>> = {
     link: { href: "https://github.com/SelfTopic/selfrotgram", label: "selfrotgram на GitHub" },
   },
 };
+
+const DOSSIER: ReplyLink = { href: "/bot", label: "Открыть досье chestor_bot" };
+
+export const KAGUNE_NAMES = ["Укаку", "Коукаку", "Ринкаку", "Бикаку"] as const;
+
+// Реплики chestor_bot: часть — дословно из его текстов, часть — для сайта.
+export const BOT_REPLIES = {
+  start: "Привет, Гость! Я бот по «Токийскому гулю»: тут жрут людей, ломают пальцы и дерутся кагуне. Команды и лор — /help",
+  help: { text: "📖 Все команды и лор — в досье. Там же про голод, бои и экономику.", link: DOSSIER },
+  birth: [
+    "🩸 Гость, поздравляю: теперь ты жрёшь людей. Твой кагуне: {kagune}. Кофе — в Антейку, люди — где поймаешь.",
+    "🐣 Добро пожаловать в пищевую цепочку, Гость. Ты больше не человек — ты гуль. Кагуне: {kagune}.",
+  ],
+  coffee: [
+    "☕️ Антейку наливает — ты пьёшь. Чёрный, как твоё будущее.",
+    "☕️ Глоток — и ты почти как человек. Почти.",
+    "☕️ Единственное, что гуль может проглотить без блевоты. Кайфуй.",
+  ],
+  eat: ["🍽 Хрусть-хрусть. Был человек — нет человека.", "🍽 Мясо свежее, крики вкусные."],
+  snap: "🫰 Хруст. Сайтовые пальцы не ломаются — за CheSton иди в Telegram.",
+  profile: "❕ Профиль живёт в базе бота, а здесь ты просто Гость без кагуне. Даже RC-клеток нет.",
+  hunger: "🍖 Голод: 100% (не голоден). Пока. Сайт кормит только текстом.",
+  fallback: [
+    { text: "Я здесь витрина: настоящий бот работает в Telegram-чатах. Всё про меня — в досье.", link: DOSSIER },
+    { text: "Не понял. Попробуй «растить кагуне», «пить кофе» или /start.", link: undefined },
+    { text: "Гули не отвечают на такое. Но досье CCG на меня уже собрано.", link: DOSSIER },
+  ],
+} as const;

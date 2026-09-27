@@ -1,0 +1,46 @@
+.intro {
+  display: grid;
+  gap: var(--space-2);
+  align-self: center;
+  width: min(380px, 100%);
+  margin: auto auto var(--space-5);
+  padding: 0 0 var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-bubble-in);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.intro > :not(.cover) {
+  padding: 0 var(--space-4);
+}
+
+.cover {
+  display: grid;
+  place-items: center;
+  height: 140px;
+  margin-bottom: var(--space-2);
+  background:
+    radial-gradient(circle at 50% 120%, var(--color-accent-soft), transparent 70%),
+    linear-gradient(160deg, var(--color-bg-sunken), var(--color-bg-elevated));
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.try {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.try code {
+  color: var(--color-accent-strong);
+}
+
+.dossier {
+  justify-self: center;
+  font-weight: 600;
+}
