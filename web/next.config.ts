@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const chatBackend = process.env.CHAT_BACKEND_URL ?? "http://localhost:8080";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactStrictMode: true,
   poweredByHeader: false,
   async rewrites() {
