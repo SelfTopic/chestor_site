@@ -25,6 +25,7 @@ export type LiveState = {
   passExpiresAt: number | null;
   limits: History["limits"];
   unread: number;
+  typing: { nick: string; until: number }[];
 };
 
 const INITIAL: LiveState = {
@@ -38,6 +39,7 @@ const INITIAL: LiveState = {
   passExpiresAt: null,
   limits: { nick_min: 2, nick_max: 24, text_max: 300 },
   unread: 0,
+  typing: [],
 };
 
 let state: LiveState = INITIAL;
@@ -59,7 +61,10 @@ type ServerEvent =
   | { type: "hello"; online: number; mode: ChatMode }
   | { type: "online"; count: number }
   | { type: "message"; message: LiveMessage }
+  | { type: "typing"; nick: string }
   | { type: "pong" };
+
+const TYPING_SHOWN_MS = 4000;
 
 async function loadHistory(): Promise<void> {
   const history = await chatApi.history();
@@ -110,10 +115,17 @@ function connect(): void {
     }
     if (data.type === "hello") update({ online: data.online, mode: data.mode });
     else if (data.type === "online") update({ online: data.count });
+    else if (data.type === "typing") {
+      const now = Date.now();
+      const others = state.typing.filter((item) => item.nick !== data.nick && item.until > now);
+      update({ typing: [...others, { nick: data.nick, until: now + TYPING_SHOWN_MS }] });
+      window.setTimeout(() => update({ typing: state.typing.filter((item) => item.until > Date.now()) }), TYPING_SHOWN_MS + 50);
+    }
     else if (data.type === "message") {
       update({
         messages: mergeMessages(state.messages, [data.message]),
         unread: viewing ? 0 : state.unread + 1,
+        typing: state.typing.filter((item) => item.nick !== data.message.author),
       });
       messageListeners.forEach((listener) => listener(data.message));
     }
@@ -137,6 +149,16 @@ export function startLive(): void {
 export function setLiveViewing(value: boolean): void {
   viewing = value;
   if (value && state.unread) update({ unread: 0 });
+}
+
+let lastTypingSent = 0;
+
+// Сервер пропускает «печатает…» не чаще раза в 2 с; шлём раз в 3 с, пока идёт набор.
+export function sendTyping(nick: string): void {
+  const now = Date.now();
+  if (now - lastTypingSent < 3000 || socket?.readyState !== WebSocket.OPEN) return;
+  lastTypingSent = now;
+  socket.send(JSON.stringify({ type: "typing", nick }));
 }
 
 export function setPassExpiresAt(value: number | null): void {

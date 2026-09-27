@@ -13,6 +13,7 @@ type ComposerProps = {
   leading?: ReactNode;
   hint?: ReactNode;
   label?: string;
+  onInput?: (text: string) => void;
 };
 
 export function Composer({
@@ -23,6 +24,7 @@ export function Composer({
   leading,
   hint,
   label = "Сообщение",
+  onInput,
 }: ComposerProps) {
   const [text, setText] = useState("");
   const [busy, setBusy] = useState(false);
@@ -68,7 +70,10 @@ export function Composer({
             maxLength={maxLength}
             placeholder={placeholder}
             disabled={disabled}
-            onChange={(event) => setText(event.target.value)}
+            onChange={(event) => {
+              setText(event.target.value);
+              onInput?.(event.target.value);
+            }}
             onKeyDown={onKeyDown}
             enterKeyHint="send"
           />

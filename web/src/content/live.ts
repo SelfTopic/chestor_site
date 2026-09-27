@@ -22,6 +22,8 @@ export const LIVE_TEXT = {
   placeholder: "Написать в группу…",
   placeholderLocked: "Сначала пропуск",
   newMessages: "новые сообщения",
+  typingOne: "{nick} печатает",
+  typingMany: "{nick} и ещё {count} печатают",
   queued: "в очереди",
   sending: "отправляется",
   failed: "не ушло",

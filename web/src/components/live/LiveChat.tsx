@@ -10,7 +10,7 @@ import { errorText, LIVE_TEXT } from "@/content/live";
 import { chatApi, ChatApiError, newClientId, type PendingMessage, settlePending } from "@/lib/chatApi";
 import { isThousandMinusSeven, thousandMinusSeven } from "@/lib/easterEggs";
 import { layoutMessages } from "@/lib/liveLayout";
-import { setPassExpiresAt, useLive } from "@/lib/liveStore";
+import { sendTyping, setPassExpiresAt, useLive } from "@/lib/liveStore";
 import { ownClientIds, rememberOwn } from "@/lib/ownMessages";
 import { formatTime } from "@/lib/time";
 import { useStoredNick } from "@/lib/useStoredNick";
@@ -205,6 +205,18 @@ export function LiveChat() {
           ))}
         </div>
       </div>
+      {live.typing.length > 0 ? (
+        <p className={styles.typing} aria-live="polite">
+          {(live.typing.length === 1 ? LIVE_TEXT.typingOne : LIVE_TEXT.typingMany)
+            .replace("{nick}", live.typing[0]!.nick)
+            .replace("{count}", String(live.typing.length - 1))}
+          <span className={styles.dots} aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+        </p>
+      ) : null}
       {unseen > 0 ? (
         <button type="button" className={styles.jump} onClick={jumpDown}>
           <ArrowDown size={16} aria-hidden="true" /> {LIVE_TEXT.newMessages}
@@ -253,6 +265,9 @@ export function LiveChat() {
         {lockedReason ? <p className={styles.notice}>{lockedReason}</p> : null}
         <Composer
           onSend={send}
+          onInput={(value) => {
+            if (value.trim() && nick && hasPass) sendTyping(nick);
+          }}
           maxLength={live.limits.text_max}
           disabled={Boolean(lockedReason)}
           placeholder={hasPass ? LIVE_TEXT.placeholder : LIVE_TEXT.placeholderLocked}
