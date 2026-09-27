@@ -101,8 +101,9 @@
 
 .redacted {
   padding: 0 6px;
-  background: var(--color-text);
-  color: var(--color-text);
+  background: #0b0b0b;
+  color: #0b0b0b;
+  box-shadow: 0 0 0 1px var(--color-border-strong);
   font-family: var(--font-mono);
   user-select: none;
 }

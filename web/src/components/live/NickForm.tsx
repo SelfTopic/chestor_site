@@ -7,9 +7,15 @@ import { checkNick } from "@/lib/nick";
 
 import styles from "./LiveChat.module.css";
 
-type NickFormProps = { initial: string; min: number; max: number; onSave: (nick: string) => void };
+type NickFormProps = {
+  initial: string;
+  min: number;
+  max: number;
+  focus: boolean;
+  onSave: (nick: string) => void;
+};
 
-export function NickForm({ initial, min, max, onSave }: NickFormProps) {
+export function NickForm({ initial, min, max, focus, onSave }: NickFormProps) {
   const [value, setValue] = useState(initial);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,7 +42,7 @@ export function NickForm({ initial, min, max, onSave }: NickFormProps) {
             setValue(event.target.value);
             setError(null);
           }}
-          autoFocus
+          autoFocus={focus}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? "nick-error" : undefined}
         />

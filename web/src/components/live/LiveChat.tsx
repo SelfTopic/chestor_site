@@ -224,6 +224,7 @@ export function LiveChat() {
               initial={nick}
               min={live.limits.nick_min}
               max={live.limits.nick_max}
+              focus={panel === "nick"}
               onSave={(value) => {
                 setNick(value);
                 setPanel(hasPass ? "none" : "captcha");

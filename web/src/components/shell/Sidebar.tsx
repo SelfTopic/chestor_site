@@ -14,6 +14,7 @@ export function Sidebar() {
         <span className={styles.brand}>{UI.siteName}</span>
       </div>
       <DialogList dialogs={dialogs} />
+      <p className={styles.hint}>{UI.eyeHint}</p>
       <p className={styles.footer}>{UI.footer}</p>
     </>
   );

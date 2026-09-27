@@ -9,6 +9,7 @@ import { Install } from "@/components/selfrot/Install";
 import { Pairs } from "@/components/selfrot/Pairs";
 import styles from "@/components/selfrot/Selfrot.module.css";
 import { Terminal } from "@/components/selfrot/Terminal";
+import { RichText } from "@/components/tg/RichText";
 import { GUARANTEES, SR_FACTS, SR_FEATURES, SR_HERO, SR_LINKS, SR_MISSING } from "@/content/selfrotgram";
 
 export const metadata: Metadata = {
@@ -29,7 +30,9 @@ export default function SelfrotgramPage() {
             <h1 className={styles.title} id="sr-title">
               Типы <em>говорят правду</em>
             </h1>
-            <p className={styles.lead}>{SR_HERO.lead}</p>
+            <p className={styles.lead}>
+              <RichText text={SR_HERO.lead} />
+            </p>
             <p className={styles.status}>{SR_HERO.status}</p>
             <div className={styles.ctas}>
               <a href={SR_LINKS.github} className={styles.primary}>

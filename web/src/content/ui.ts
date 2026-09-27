@@ -7,4 +7,5 @@ export const UI = {
   footer: "chestor.site · собрано вручную, без шаблонов",
   emptyPane: "Выбери диалог слева",
   skipToDialog: "К открытому диалогу",
+  eyeHint: "Глаз наверху — не декор. Попробуй моргнуть им.",
 } as const;

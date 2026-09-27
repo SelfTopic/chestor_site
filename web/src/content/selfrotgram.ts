@@ -10,7 +10,7 @@ export const SR_LINKS = {
 export const SR_HERO = {
   kicker: "selfrotgram · Telegram Bot API для Python",
   title: "Типы говорят правду",
-  lead: "Если хендлер обещает, что у сообщения есть текст, фильтр это проверил, а message.text в редакторе — str, а не str | None. Без assert, без cast, без скрытых аргументов.",
+  lead: "Если хендлер обещает, что у сообщения есть текст, фильтр это проверил, а `message.text` в редакторе — `str`, а не `str | None`. Без `assert`, без `cast`, без скрытых аргументов.",
   status: "Альфа: 0.1.1–0.1.4 на PyPI, сентябрь 2026. Работает на реальном боте — chestor_bot.",
 } as const;
 
