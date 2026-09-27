@@ -31,6 +31,7 @@ type ThreadProps = {
 export function Thread({ dialogId, label, startAt = "bottom", placeholder, children }: ThreadProps) {
   const [messages, setMessages] = useState<LocalMessage[]>([]);
   const [typing, setTyping] = useState(false);
+  const [awake, setAwake] = useState(false);
   const nextId = useRef(0);
   const timers = useRef<number[]>([]);
   const root = useRef<HTMLDivElement>(null);
@@ -62,6 +63,10 @@ export function Thread({ dialogId, label, startAt = "bottom", placeholder, child
       if (index === 0) setTyping(true);
       const timer = window.setTimeout(() => {
         push({ direction: "in", text: reply.text, link: reply.link });
+        if (reply.effect === "awaken") {
+          setAwake(true);
+          timers.current.push(window.setTimeout(() => setAwake(false), 1400));
+        }
         if (index === replies.length - 1) setTyping(false);
       }, elapsed);
       timers.current.push(timer);
@@ -69,7 +74,7 @@ export function Thread({ dialogId, label, startAt = "bottom", placeholder, child
   }
 
   return (
-    <div className={styles.thread} ref={root}>
+    <div className={styles.thread} ref={root} data-awake={awake || undefined}>
       <ChatArea label={label}>
         {children}
         {messages.map((message) => (

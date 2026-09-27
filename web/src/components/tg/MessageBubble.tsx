@@ -10,6 +10,7 @@ type MessageBubbleProps = {
   direction: "in" | "out";
   time?: string;
   author?: string;
+  authorTag?: string;
   quote?: Quote;
   tail?: boolean;
   read?: boolean;
@@ -21,6 +22,7 @@ export function MessageBubble({
   direction,
   time,
   author,
+  authorTag,
   quote,
   tail = true,
   read,
@@ -33,6 +35,7 @@ export function MessageBubble({
         {author ? (
           <div className={styles.author} data-tone={paletteIndex(author)}>
             {author}
+            {authorTag ? <span className={styles.authorTag}>{authorTag}</span> : null}
           </div>
         ) : null}
         {quote ? (

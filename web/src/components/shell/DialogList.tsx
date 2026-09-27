@@ -8,7 +8,8 @@ import { useDeferredValue, useState } from "react";
 import { Avatar } from "@/components/tg/Avatar";
 import { dialogHref, type DialogMeta } from "@/content/dialogs";
 import { UI } from "@/content/ui";
-import { useLiveSummary } from "@/lib/liveSummary";
+import { useLive } from "@/lib/liveStore";
+import { formatTime } from "@/lib/time";
 
 import styles from "./DialogList.module.css";
 
@@ -21,7 +22,8 @@ export function DialogList({ dialogs }: { dialogs: DialogMeta[] }) {
   const pathname = usePathname();
   const [query, setQuery] = useState("");
   const deferred = useDeferredValue(query);
-  const live = useLiveSummary();
+  const live = useLive();
+  const lastLive = live.messages.at(-1);
   const visible = dialogs.filter((dialog) => matches(dialog, deferred));
 
   return (
@@ -42,8 +44,8 @@ export function DialogList({ dialogs }: { dialogs: DialogMeta[] }) {
           const href = dialogHref(dialog.id);
           const active = pathname === href || (pathname === "/" && dialog.id === "self");
           const isLive = dialog.id === "live";
-          const preview = isLive && live.last ? live.last : dialog.preview;
-          const time = isLive && live.last ? live.last.time : dialog.time;
+          const preview = isLive && lastLive ? { author: lastLive.author, text: lastLive.text } : dialog.preview;
+          const time = isLive && lastLive ? formatTime(new Date(lastLive.ts * 1000)) : dialog.time;
           return (
             <li key={dialog.id}>
               <Link

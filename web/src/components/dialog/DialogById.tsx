@@ -2,6 +2,7 @@ import { ServiceMessage } from "@/components/tg/MessageBubble";
 import { DIALOGS, type DialogId } from "@/content/dialogs";
 
 import { BotDialog } from "@/components/botchat/BotDialog";
+import { LiveDialog } from "@/components/live/LiveDialog";
 import { ProjectsChannel } from "@/components/projects/ProjectsChannel";
 import { SelfrotChannel } from "@/components/selfrot/SelfrotChannel";
 import { SelfDialog } from "@/components/self/SelfDialog";
@@ -13,6 +14,7 @@ export function DialogById({ id }: { id: DialogId }) {
   if (id === "self") return <SelfDialog />;
   if (id === "projects") return <ProjectsChannel />;
   if (id === "chestor_bot") return <BotDialog />;
+  if (id === "live") return <LiveDialog />;
   if (id === "selfrotgram") return <SelfrotChannel />;
   const dialog = DIALOGS[id];
   return (
