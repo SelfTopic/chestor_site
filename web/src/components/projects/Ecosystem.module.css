@@ -1,0 +1,99 @@
+.figure {
+  container-type: inline-size;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.narrow {
+  display: none;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+@container (max-width: 440px) {
+  .wide {
+    display: none;
+  }
+
+  .narrow {
+    display: block;
+  }
+}
+
+.edge {
+  stroke: var(--color-text-faint);
+  stroke-width: 1.6;
+  stroke-dasharray: 5 4;
+  animation: flow 1.4s linear infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+
+.arrowHead {
+  fill: var(--color-text-faint);
+}
+
+.edgeLabel {
+  fill: var(--color-text-muted);
+  font: 500 11px var(--font-mono);
+}
+
+.node rect {
+  fill: var(--color-bg-elevated);
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+  transition: stroke var(--duration-base);
+}
+
+.node[data-accent] rect {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+:global(:root[data-theme="ghoul"]) .node[data-accent] rect {
+  filter: drop-shadow(0 0 6px rgba(226, 32, 63, 0.45));
+}
+
+.title {
+  fill: var(--color-text);
+  font: 700 14px var(--font-mono);
+  text-anchor: middle;
+}
+
+.nodeCaption {
+  fill: var(--color-text-muted);
+  font: 500 11px var(--font-sans);
+  text-anchor: middle;
+}
+
+.link:hover rect,
+.link:focus-visible rect {
+  stroke: var(--color-accent);
+  stroke-width: 2.5;
+}
+
+.link:focus-visible {
+  box-shadow: none;
+}
+
+.note {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge {
+    animation: none;
+  }
+}
