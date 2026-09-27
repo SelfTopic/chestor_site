@@ -173,3 +173,41 @@
 :root[data-theme="ghoul"] [data-tone="4"] { --tone: #4fd1c5; }
 :root[data-theme="ghoul"] [data-tone="5"] { --tone: #7ab8ff; }
 :root[data-theme="ghoul"] [data-tone="6"] { --tone: #f08bd9; }
+
+/* Подсветка кода и терминал. */
+:root,
+:root[data-theme="human"] {
+  --code-bg: #f6f8fb;
+  --code-border: #e1e6ee;
+  --syntax-text: #1f2933;
+  --syntax-keyword: #7c3aed;
+  --syntax-string: #0f7b3f;
+  --syntax-comment: #7b8794;
+  --syntax-number: #b45309;
+  --syntax-type: #1f6fd1;
+  --syntax-func: #b8325a;
+  --syntax-decorator: #9a6700;
+  --terminal-bg: #10151c;
+  --terminal-text: #d6e2f0;
+  --terminal-prompt: #5fb3ff;
+  --terminal-error: #ff7b72;
+  --terminal-warn: #e3b341;
+}
+
+:root[data-theme="ghoul"] {
+  --code-bg: #120d0f;
+  --code-border: #2a1f22;
+  --syntax-text: #eadfe1;
+  --syntax-keyword: #ff5c75;
+  --syntax-string: #e9b97a;
+  --syntax-comment: #7d6a6e;
+  --syntax-number: #ff9a3c;
+  --syntax-type: #f2a6b3;
+  --syntax-func: #ffd1d8;
+  --syntax-decorator: #d9a3ad;
+  --terminal-bg: #060405;
+  --terminal-text: #eadfe1;
+  --terminal-prompt: #ff3355;
+  --terminal-error: #ff4d6a;
+  --terminal-warn: #f0a830;
+}
