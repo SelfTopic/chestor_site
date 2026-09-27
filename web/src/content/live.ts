@@ -59,4 +59,7 @@ export const CHECKPOINT_TEXT = {
   openLive: "Открыть Live-чат",
   score: "счёт {score} · серия {streak} · рекорд {best}",
   loading: "Сверяюсь с базой CCG…",
+  useButtons: "Отвечай кнопками или номером варианта: следователь ждать не будет.",
+  closed: "КПП закрыт: {reason}",
+  fixture: "Вопросы сейчас из резервной колоды: у сервера нет сессии Ghoul Quiz.",
 } as const;
