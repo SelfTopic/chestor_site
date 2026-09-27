@@ -6,6 +6,7 @@ import { MessageBubble } from "@/components/tg/MessageBubble";
 import { DIALOGS } from "@/content/dialogs";
 import { OWNER, SELF_MESSAGES, STACK } from "@/content/owner";
 
+import { NowWorking } from "./NowWorking";
 import styles from "./SelfDialog.module.css";
 
 export function SelfDialog() {
@@ -81,6 +82,7 @@ export function SelfDialog() {
           </span>
         </MessageBubble>
 
+        <NowWorking />
         <MessageBubble direction="in">{SELF_MESSAGES.since}</MessageBubble>
         <InlineKeyboard
           rows={[

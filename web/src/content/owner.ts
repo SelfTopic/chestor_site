@@ -71,4 +71,16 @@ export const SELF_MESSAGES = {
     "Код пишу вместе с Claude Code: CLAUDE.md в репозиториях, облачные сессии, а userbot-api — чтобы Claude проверял ботов в настоящем Telegram. Этот сайт собран так же.",
   since: "Первые репозитории — апрель 2025. Что было дальше — в канале «Проекты».",
   contacts: "Где меня найти:",
+  now: "Сейчас в работе — последние коммиты в публичных репозиториях:",
 } as const;
+
+// Откуда собирать «Сейчас в работе» (публичные репозитории из docs/CONTENT.md).
+export const ACTIVE_REPOS = [
+  "chestor_bot",
+  "selfrotgram",
+  "chestor_site",
+  "questions_ghoul_api",
+  "userbot-api",
+  "voice-player",
+  "tiktok-userbot",
+] as const;
