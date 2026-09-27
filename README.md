@@ -29,11 +29,19 @@ pnpm dev                                            # http://localhost:3000
 Настоящий Telegram: `CHAT_MODE=telegram BOT_TOKEN=... CHAT_ID=... ENV=DEV` — бот
 работает long polling. Остальные переменные — в `chat/.env.example`.
 
+Всё вместе в Docker (web, chat, redis): `docker compose up -d --build`, переменные —
+в `chat/.env`. Как выкатить на chestor.site рядом с существующими сервисами — `docs/DEPLOY.md`.
+
 ## Проверки
 
 ```bash
 cd web  && pnpm lint && pnpm typecheck && pnpm test && pnpm build
 cd chat && poetry run ruff check . && poetry run pyright && poetry run pytest
+cd chat && poetry run selfrot check --strict --package chestor_chat/telegram chestor_chat.telegram.bot:ChatDispatcher
+
+# глазами: скриншоты 1440/390 в обеих темах и аудит доступности (нужен запущенный сайт)
+cd web && node scripts/screenshots.mjs http://localhost:3000 / /c/live /bot
+cd web && node scripts/a11y.mjs
 ```
 
 Те же проверки запускает GitHub Actions на каждый push и pull request.
