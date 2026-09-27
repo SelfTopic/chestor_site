@@ -5,10 +5,10 @@
 рабочий сайт.
 
 ## Этап 0. Каркас
-- [ ] `web/`: Next.js (App Router, TS strict, ESLint), pnpm; скрипты `lint`, `typecheck`, `test` (Vitest), `build`
-- [ ] `chat/`: Poetry-проект, aiohttp-приложение с `GET /chat/health`, ruff, pyright, pytest
-- [ ] `.github/workflows/ci.yml`: проверки обеих частей на push и PR
-- [ ] `README.md` проекта: что это, как запустить обе части локально
+- [x] `web/`: Next.js (App Router, TS strict, ESLint), pnpm; скрипты `lint`, `typecheck`, `test` (Vitest), `build`
+- [x] `chat/`: Poetry-проект, aiohttp-приложение с `GET /chat/health`, ruff, pyright, pytest
+- [x] `.github/workflows/ci.yml`: проверки обеих частей на push и PR
+- [x] `README.md` проекта: что это, как запустить обе части локально
 
 ## Этап 1. Дизайн-система и темы
 - [ ] Токены (цвета, типографика, радиусы, тени, анимации) для тем «Человек» и «Гуль» в одном файле
@@ -80,7 +80,18 @@
    (`CHAT_ID` из env), живые проверки в тестовой супергруппе.
 2. Можно ли показать email на сайте? — Пока только Telegram и GitHub.
 3. Ссылка на прод-бота chestor_bot (юзернейм)? — Пока ссылка на репозиторий.
+4. **Пуш не работает:** у облачной сессии нет прав на запись в `SelfTopic/chestor_site`
+   (`git push` и GitHub API отвечают 403 «Resource not accessible by integration»). Все
+   коммиты сделаны локально в ветке `claude/optimistic-cray-d76ey4`. — Как починить:
+   установить Claude GitHub App на репозиторий / переподключить GitHub в claude.ai, после
+   чего запушить ветку из этой же сессии (контейнер держит историю, пока сессия жива).
+5. TypeScript закреплён на 6.x, ESLint на 9.x: typescript-eslint и eslint-plugin-react пока
+   не поддерживают TS 7 и ESLint 10. — Обновить, когда выйдет поддержка.
 
 ## Журнал
 
 (Дата, время — что сделано — что не проверено.)
+
+- 2026-09-27 21:00 — Этап 0: каркас web/ (Next 16, TS strict, ESLint, Vitest), chat/ (Poetry,
+  aiohttp, `/chat/health`, ruff, pyright, pytest), CI, README. Проверки зелёные локально;
+  CI на GitHub не запускался (пуш запрещён, см. вопрос 4).
