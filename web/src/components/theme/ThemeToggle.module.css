@@ -1,3 +1,31 @@
+.wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.egg {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: var(--z-overlay);
+  width: max-content;
+  max-width: 240px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  box-shadow: var(--shadow-md), var(--glow);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  animation: egg-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes egg-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
 .toggle {
   --eye-sclera: #ffffff;
   --eye-iris: #3f8ddb;

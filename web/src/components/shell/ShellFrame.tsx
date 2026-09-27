@@ -15,6 +15,11 @@ export function ShellFrame({ sidebar, children }: { sidebar: ReactNode; children
 
   // Одно WS-соединение на вкладку: Live-чат обновляет список диалогов, даже когда закрыт.
   useEffect(() => startLive(), []);
+  useEffect(() => {
+    // Пасхалка для тех, кто открыл консоль.
+    console.log("%c◉ CHESTOR", "color:#e2203f;font:800 28px sans-serif;text-shadow:0 0 8px #e2203f");
+    console.log(UI.consoleGreeting);
+  }, []);
   useEffect(() => setLiveViewing(pathname === "/c/live"), [pathname]);
   return (
     <div className={styles.shell} data-dialog-open={dialogOpen}>

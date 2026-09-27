@@ -1,5 +1,5 @@
 import type { DialogId } from "@/content/dialogs";
-import { AUTO_REPLIES, BOT_REPLIES, KAGUNE_NAMES, type ReplyLink } from "@/content/replies";
+import { AUTO_REPLIES, BOT_REPLIES, KAGUNE_NAMES, LORE_EGGS, type ReplyLink } from "@/content/replies";
 
 import { isThousandMinusSeven, thousandMinusSeven } from "./easterEggs";
 
@@ -42,6 +42,8 @@ function botReply(text: string, random: Random): Omit<Reply, "delay"> {
 
 export function respond(dialogId: DialogId, text: string, random: Random = Math.random): Reply[] {
   if (isThousandMinusSeven(text)) return thousandMinusSeven();
+  const egg = LORE_EGGS.find((item) => item.pattern.test(text.trim()));
+  if (egg) return [{ ...egg.reply, delay: 800 }];
   if (dialogId === "chestor_bot") return [{ ...botReply(text, random), delay: 700 }];
   const auto = AUTO_REPLIES[dialogId];
   return auto ? [{ ...auto, delay: 900 }] : [];

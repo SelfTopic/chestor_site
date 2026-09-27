@@ -24,3 +24,15 @@ test("пасхалка работает в любом диалоге", () => {
     expect(respond(dialog, "1000-7")[0]?.text).toBe("993");
   }
 });
+
+test("лорные пасхалки по ключевым словам", () => {
+  expect(respond("self", "а кофе есть?")[0]?.text).toContain("Антейку");
+  expect(respond("projects", "Дуров одобряет")[0]?.text).toContain("parse_mode");
+  expect(respond("self", "Какой сегодня день?")[0]?.text).toContain("пасхалку");
+  expect(respond("self", "меня ищет CCG")[0]?.text).toContain("хэшем");
+});
+
+test("без ключевых слов — обычный ответ диалога", () => {
+  expect(respond("self", "привет")[0]?.link?.href).toBe("https://t.me/Self_topic");
+  expect(respond("self", "кофейня")[0]?.link?.href).toBe("https://t.me/Self_topic");
+});
