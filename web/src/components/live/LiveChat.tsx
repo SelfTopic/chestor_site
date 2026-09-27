@@ -6,7 +6,7 @@ import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Avatar } from "@/components/tg/Avatar";
 import { Composer } from "@/components/tg/Composer";
 import { MessageBubble, ServiceMessage } from "@/components/tg/MessageBubble";
-import { errorText, LIVE_TEXT } from "@/content/live";
+import { ERROR_TEXT, errorText, LIVE_TEXT } from "@/content/live";
 import { chatApi, ChatApiError, newClientId, type PendingMessage, settlePending } from "@/lib/chatApi";
 import { isThousandMinusSeven, thousandMinusSeven } from "@/lib/easterEggs";
 import { layoutMessages } from "@/lib/liveLayout";
@@ -24,6 +24,7 @@ type LocalLine = { id: number; text: string; out: boolean };
 type Panel = "none" | "nick" | "captcha";
 
 const NEAR_BOTTOM_PX = 120;
+const STUCK_AFTER_S = 90;
 
 function dayLabel(ts: number): string {
   return new Date(ts * 1000).toLocaleDateString("ru-RU", { day: "numeric", month: "long" });
@@ -52,7 +53,12 @@ export function LiveChat() {
 
   const hasPass = live.passExpiresAt !== null && live.passExpiresAt * 1000 > now;
   const muted = live.mutedUntil !== null && live.mutedUntil * 1000 > now;
-  const visiblePending = settlePending(pending, live.messages);
+  // Очередь в Telegram не бесконечна: застрявшее дольше полутора минут считаем неушедшим.
+  const visiblePending = settlePending(pending, live.messages).map((item) =>
+    item.state === "queued" && now / 1000 - item.ts > STUCK_AFTER_S
+      ? { ...item, state: "failed" as const, error: ERROR_TEXT.queue_full }
+      : item,
+  );
   const total = live.messages.length + visiblePending.length + local.length;
 
   useLayoutEffect(() => {
