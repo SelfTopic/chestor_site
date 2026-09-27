@@ -1,0 +1,17 @@
+/* Обои чата: свой узор (самолётики, скобки, чашки «Антейку», капли), красится токеном темы. */
+.wallpaper {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-chat-bg);
+}
+
+.wallpaper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-chat-pattern);
+  mask: url("/pattern.svg") repeat;
+  mask-size: 300px;
+  pointer-events: none;
+}

@@ -1,0 +1,64 @@
+.avatar {
+  --avatar-ink: var(--avatar-bg-to);
+  --avatar-slash: #ff3355;
+
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(160deg, var(--avatar-bg-from), var(--avatar-bg-to));
+  color: #ffffff;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.avatar[data-tone="0"] { --avatar-bg-from: #ff885e; --avatar-bg-to: #ff516a; }
+.avatar[data-tone="1"] { --avatar-bg-from: #ffcd6a; --avatar-bg-to: #ffa85c; }
+.avatar[data-tone="2"] { --avatar-bg-from: #82b1ff; --avatar-bg-to: #665fff; }
+.avatar[data-tone="3"] { --avatar-bg-from: #a0de7e; --avatar-bg-to: #54cb68; }
+.avatar[data-tone="4"] { --avatar-bg-from: #53edd6; --avatar-bg-to: #28c9b7; }
+.avatar[data-tone="5"] { --avatar-bg-from: #72d5fd; --avatar-bg-to: #2a9ef1; }
+.avatar[data-tone="6"] { --avatar-bg-from: #e0a2f3; --avatar-bg-to: #d669ed; }
+
+/* У гулей палитра уходит в кровь и пепел, но оттенки различимы. */
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="0"] { --avatar-bg-from: #8a0f24; --avatar-bg-to: #3a0610; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="1"] { --avatar-bg-from: #8f4a14; --avatar-bg-to: #3d1a06; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="2"] { --avatar-bg-from: #5a2140; --avatar-bg-to: #250b1a; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="3"] { --avatar-bg-from: #3d3a3b; --avatar-bg-to: #171516; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="4"] { --avatar-bg-from: #b3122f; --avatar-bg-to: #4d0714; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="5"] { --avatar-bg-from: #6b2a33; --avatar-bg-to: #2a0d12; }
+:global(:root[data-theme="ghoul"]) .avatar[data-tone="6"] { --avatar-bg-from: #7a1f5c; --avatar-bg-to: #300a24; }
+
+:global(:root[data-theme="ghoul"]) .avatar {
+  --avatar-slash: #ffffff;
+  color: #ffe9ec;
+}
+
+.glyph {
+  width: 64%;
+  height: 64%;
+}
+
+.rank {
+  fill: var(--avatar-ink);
+  font: 800 13px var(--font-display);
+}
+
+.typeTag {
+  fill: currentColor;
+  font: 700 11px var(--font-mono);
+}
+
+.online {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 26%;
+  height: 26%;
+  border: 2px solid var(--color-bg);
+  border-radius: 50%;
+  background: var(--color-success);
+}
