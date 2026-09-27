@@ -68,6 +68,9 @@ def error_response(error: ChatError) -> web.Response:
 
 
 async def _json_body(request: web.Request) -> dict[str, Any]:
+    # Только application/json: простые кросс-доменные формы (text/plain) сюда не пройдут.
+    if request.content_type != "application/json":
+        raise InvalidInput("Ожидается application/json")
     try:
         data = await request.json()
     except (json.JSONDecodeError, UnicodeDecodeError):
