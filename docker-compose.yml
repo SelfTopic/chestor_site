@@ -23,9 +23,10 @@ services:
     volumes:
       # Сессия ghoul_quiz владельца (ghoul-quiz-register): переживает пересборку контейнера.
       - ghoul-quiz:/data/ghoul_quiz
+    # На хосте 8080 уже занят userbot-api, поэтому наружу чат смотрит портами 8090/8091.
     ports:
-      - "127.0.0.1:8080:8080"
-      - "127.0.0.1:8081:8081"
+      - "127.0.0.1:${CHAT_HOST_PORT:-8090}:8080"
+      - "127.0.0.1:${CHAT_WEBHOOK_HOST_PORT:-8091}:8081"
     depends_on:
       redis:
         condition: service_healthy

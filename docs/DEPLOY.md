@@ -10,16 +10,17 @@
  /api/…         │ → questions_ghoul_api (уже есть, не трогаем)            │
  /webhook…      │ → chestor_bot (уже есть, не трогаем)                    │
  /userbot…      │ → userbot-api (уже есть, не трогаем)                    │
- /chat/telegram/│ → chat :8081   вебхук бота Live-чата                    │
- /chat/ws       │ → chat :8080   WebSocket (Upgrade)                      │
- /chat/         │ → chat :8080   HTTP API чата и капчи                    │
+ /chat/telegram/│ → chat :8091   вебхук бота Live-чата                    │
+ /chat/ws       │ → chat :8090   WebSocket (Upgrade)                      │
+ /chat/         │ → chat :8090   HTTP API чата и капчи                    │
  /              │ → web  :3000   Next.js                                  │
                 └─────────────────────────────────────────────────────────┘
  chat ── redis (история, лимиты, баны, пропуска капчи)
 ```
 
 Всё поднимает `docker-compose.yml` в корне: `web`, `chat`, `redis`. Порты слушают только
-`127.0.0.1`, наружу смотрит nginx.
+`127.0.0.1`, наружу смотрит nginx. Чат на хосте — `8090` (HTTP/WS) и `8091` (вебхук), потому что
+`8080` занят userbot-api; поменять можно через `CHAT_HOST_PORT` / `CHAT_WEBHOOK_HOST_PORT`.
 
 ## 1. Бот для Live-чата
 
@@ -62,7 +63,7 @@ git clone https://github.com/SelfTopic/chestor_site && cd chestor_site
 cp chat/.env.example chat/.env && $EDITOR chat/.env
 docker compose up -d --build
 docker compose ps                    # все три сервиса healthy
-curl -s 127.0.0.1:8080/chat/health   # {"ok": true}
+curl -s 127.0.0.1:8090/chat/health   # {"ok": true}
 ```
 
 Блок «Сейчас в работе» в диалоге Self берёт публичные коммиты GitHub при сборке и затем
@@ -104,13 +105,13 @@ map $http_upgrade $connection_upgrade {
 
 # внутри server { … }
 location /chat/telegram/ {
-    proxy_pass http://127.0.0.1:8081;          # путь сохраняется целиком
+    proxy_pass http://127.0.0.1:8091;          # путь сохраняется целиком
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
 }
 
 location = /chat/ws {
-    proxy_pass http://127.0.0.1:8080;
+    proxy_pass http://127.0.0.1:8090;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
@@ -120,7 +121,7 @@ location = /chat/ws {
 }
 
 location /chat/ {
-    proxy_pass http://127.0.0.1:8080;
+    proxy_pass http://127.0.0.1:8090;
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     client_max_body_size 16k;
