@@ -63,7 +63,7 @@ export const DIALOGS: Record<DialogId, DialogMeta> = {
   },
   chestor_bot: {
     id: "chestor_bot",
-    title: "@chestor_bot",
+    title: "@chestor_chat_bot",
     kind: "bot",
     glyph: "bot",
     subtitle: "бот · RPG по «Токийскому гулю»",

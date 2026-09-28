@@ -99,13 +99,9 @@
   font-weight: 500;
 }
 
-.redacted {
-  padding: 0 6px;
-  background: #0b0b0b;
-  color: #0b0b0b;
-  box-shadow: 0 0 0 1px var(--color-border-strong);
+.fieldLink {
+  color: var(--color-accent-text);
   font-family: var(--font-mono);
-  user-select: none;
 }
 
 .status {

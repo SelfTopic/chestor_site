@@ -17,7 +17,7 @@ export function BotDialog() {
   const dialog = DIALOGS.chestor_bot;
   return (
     <DialogScreen dialog={dialog}>
-      <Thread dialogId="chestor_bot" label="Диалог с @chestor_bot" placeholder="Команда для бота…">
+      <Thread dialogId="chestor_bot" label="Диалог с @chestor_chat_bot" placeholder="Команда для бота…">
         <section className={styles.intro} aria-label={BOT_INTRO.title}>
           <div className={styles.cover}>
             <Avatar glyph="bot" size={72} />

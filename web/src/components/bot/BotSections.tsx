@@ -8,6 +8,7 @@ import {
   BOT_FACTS,
   BOT_HERO,
   BOT_REPO,
+  BOT_TELEGRAM,
   BOT_STACK,
   COMMANDS,
   DEMOS,
@@ -40,10 +41,10 @@ export function BotHero() {
             <div key={field.label}>
               <dt>{field.label}</dt>
               <dd>
-                {field.redacted ? (
-                  <span className={styles.redacted} title="Уточняется у владельца">
+                {field.href ? (
+                  <a href={field.href} className={styles.fieldLink}>
                     {field.value}
-                  </span>
+                  </a>
                 ) : (
                   field.value
                 )}
@@ -53,7 +54,10 @@ export function BotHero() {
         </dl>
         <p className={styles.status}>{BOT_HERO.status}</p>
         <div className={styles.actions}>
-          <a href={BOT_REPO} className={styles.primary}>
+          <a href={BOT_TELEGRAM.href} className={styles.primary}>
+            Открыть в Telegram
+          </a>
+          <a href={BOT_REPO} className={styles.secondary}>
             Исходники на GitHub
           </a>
           <Link href="/c/chestor_bot" className={styles.secondary}>

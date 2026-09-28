@@ -1,6 +1,7 @@
 // Досье chestor_bot. Механики — из BATTLE_DESIGN/BATTLE_ENGINE/ECONOMY и текстов бота
 // (src/bot/dialogs/*.yaml в репозитории), цифры — из docs/CONTENT.md.
 export const BOT_REPO = "https://github.com/SelfTopic/chestor_bot";
+export const BOT_TELEGRAM = { href: "https://t.me/chestor_chat_bot", label: "@chestor_chat_bot" } as const;
 
 export const BOT_HERO = {
   caseNo: "Дело № SSS-001",
@@ -13,12 +14,12 @@ export const BOT_HERO = {
 
 export const LIFE_CYCLE = ["голод", "смерть", "регенерация", "прокачка", "бои"] as const;
 
-export const DOSSIER_FIELDS: readonly { label: string; value: string; redacted?: boolean }[] = [
+export const DOSSIER_FIELDS: readonly { label: string; value: string; href?: string }[] = [
   { label: "Среда обитания", value: "Telegram-чаты, вебхук на chestor.site" },
   { label: "Язык", value: "Python 3.11–3.14" },
   { label: "Фреймворк", value: "selfrotgram (с сентября 2026), до этого aiogram 3" },
   { label: "Хранилище", value: "PostgreSQL 16, 22 миграции Alembic" },
-  { label: "Юзернейм прод-бота", value: "засекречено", redacted: true },
+  { label: "Юзернейм прод-бота", value: BOT_TELEGRAM.label, href: BOT_TELEGRAM.href },
 ];
 
 export type HungerTier = { name: string; range: string; from: number; to: number; falling: string; rising: string };
