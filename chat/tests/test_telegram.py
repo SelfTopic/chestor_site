@@ -66,7 +66,9 @@ async def harness(telegram: FakeTelegram) -> AsyncIterator[Harness]:
     storage = MemoryStorage()
     events = Events()
     chat = ChatService(storage, events, Limits())
-    dispatcher = ChatDispatcher(TOKEN, BotDeps(chat, ModerationService(storage), GROUP_ID))
+    dispatcher = ChatDispatcher(
+        TOKEN, BotDeps(chat, ModerationService(storage), GROUP_ID, show_media=True)
+    )
     await dispatcher.api.load_me()
     chat.outbox = Outbox(TelegramGateway(dispatcher.api, GROUP_ID), Limits(), on_sent=chat.on_sent)
     chat.outbox.start()

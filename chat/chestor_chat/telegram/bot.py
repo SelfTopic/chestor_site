@@ -42,7 +42,7 @@ class ChatContext(BaseContext[TEvent]):
     moderation: ModerationService
     group_id: int
     admins: AdminCache
-    show_media: bool = True
+    show_media: bool = False
 
 
 class InGroup(BaseFilter[BaseContext[Any]]):
@@ -144,7 +144,7 @@ class BotDeps:
     chat_service: ChatService
     moderation: ModerationService
     group_id: int
-    show_media: bool = True
+    show_media: bool = False
 
     @classmethod
     def inspection(cls) -> "BotDeps":

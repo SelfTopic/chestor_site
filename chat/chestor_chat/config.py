@@ -38,7 +38,7 @@ class Settings:
     ip_hash_salt: str = field(default="", repr=False)
     pass_secret: str = field(default="", repr=False)
     trust_proxy: bool = False
-    show_media: bool = True
+    show_media: bool = False
     ghoul_quiz_email: str | None = None
     ghoul_quiz_api_url: str = "https://chestor.site/api"
     quiz_fixture_path: Path = DEFAULT_FIXTURE
@@ -95,7 +95,7 @@ class Settings:
             ip_hash_salt=salt or secrets.token_hex(16),
             pass_secret=pass_secret or secrets.token_hex(32),
             trust_proxy=_flag(get("TRUST_PROXY")),
-            show_media=_flag(get("SHOW_MEDIA") or "1"),
+            show_media=_flag(get("SHOW_MEDIA") or "0"),
             ghoul_quiz_email=get("GHOUL_QUIZ_EMAIL"),
             ghoul_quiz_api_url=get("GHOUL_QUIZ_API_URL") or "https://chestor.site/api",
             quiz_fixture_path=Path(get("QUIZ_FIXTURE_PATH") or DEFAULT_FIXTURE),
