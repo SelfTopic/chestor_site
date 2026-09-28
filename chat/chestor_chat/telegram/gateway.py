@@ -3,7 +3,7 @@ from selfrot.exceptions import SelfrotError, TelegramRetryAfter
 from selfrot.types import LinkPreviewOptions, MessageEntity
 
 from ..services.media import MediaUnavailable
-from ..services.ports import GatewayError, GatewayRetryAfter
+from ..services.ports import GatewayError, GatewayRetryAfter, Sent
 from ..validation import utf16_length
 
 
@@ -18,7 +18,7 @@ class TelegramGateway:
         self._bot = bot
         self._chat_id = chat_id
 
-    async def send(self, nick: str, text: str) -> int:
+    async def send(self, nick: str, text: str) -> Sent:
         body, entities = relay_body(nick, text)
         try:
             message = await self._bot.send_message(
@@ -31,7 +31,7 @@ class TelegramGateway:
             raise GatewayRetryAfter(float(exc.retry_after)) from exc
         except SelfrotError as exc:
             raise GatewayError(str(exc)) from exc
-        return message.message_id
+        return Sent(message.message_id, float(message.date))
 
     async def fetch(self, file_id: str) -> bytes:
         try:

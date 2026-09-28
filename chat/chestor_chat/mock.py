@@ -10,6 +10,7 @@ from collections.abc import Callable
 
 from .models import IncomingMessage, MediaRef
 from .services.chat import ChatService
+from .services.ports import Sent
 
 DEMO_PHOTO_ID = "mock-photo"
 
@@ -88,13 +89,13 @@ class MockGroup:
             self._photo = demo_photo()
         return self._photo
 
-    async def send(self, nick: str, text: str) -> int:
+    async def send(self, nick: str, text: str) -> Sent:
         message_id = next(self._ids)
         if self.chat is not None and self._rng.random() < 0.6:
             task = asyncio.create_task(self._reply(nick, text, message_id))
             self._pending.add(task)
             task.add_done_callback(self._pending.discard)
-        return message_id
+        return Sent(message_id, time.time())
 
     async def _reply(self, nick: str, text: str, message_id: int) -> None:
         await asyncio.sleep(self._rng.uniform(0.5, 1.5))

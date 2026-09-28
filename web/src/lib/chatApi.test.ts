@@ -19,6 +19,13 @@ describe("mergeMessages", () => {
     expect(merged.map((item) => item.id)).toEqual(["tg:1", "tg:2", "tg:3"]);
   });
 
+  test("порядок по message_id Telegram, даже когда часы сервера отстают", () => {
+    const fromGroup = message("tg:100", 5000);
+    const fromSiteWithLaggingClock = message("tg:101", 600, "c1");
+    const merged = mergeMessages([message("tg:99", 4990), fromGroup], [fromSiteWithLaggingClock]);
+    expect(merged.map((item) => item.id)).toEqual(["tg:99", "tg:100", "tg:101"]);
+  });
+
   test("держит не больше keep последних", () => {
     const many = Array.from({ length: 10 }, (_, index) => message(`tg:${index}`, index));
     expect(mergeMessages([], many, 3).map((item) => item.id)).toEqual(["tg:7", "tg:8", "tg:9"]);

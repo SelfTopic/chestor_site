@@ -6,7 +6,7 @@ from chestor_chat.errors import QueueFull
 from chestor_chat.limits import Limits
 from chestor_chat.models import SiteSender
 from chestor_chat.services.outbox import Outbox, Outgoing
-from chestor_chat.services.ports import GatewayRetryAfter
+from chestor_chat.services.ports import GatewayRetryAfter, Sent
 
 
 class FakeClock:
@@ -29,12 +29,12 @@ class RecordingGateway:
         self.sent: list[tuple[float, str]] = []
         self._fail = fail_once_with
 
-    async def send(self, nick: str, text: str) -> int:
+    async def send(self, nick: str, text: str) -> Sent:
         if self._fail is not None:
             seconds, self._fail = self._fail, None
             raise GatewayRetryAfter(seconds)
         self.sent.append((self.clock.now, text))
-        return len(self.sent)
+        return Sent(len(self.sent), self.clock.now)
 
 
 def item(index: int) -> Outgoing:
@@ -46,8 +46,8 @@ async def test_group_rate_never_exceeds_limit_per_minute() -> None:
     gateway = RecordingGateway(clock)
     delivered: list[int] = []
 
-    async def on_sent(_item: Outgoing, message_id: int) -> None:
-        delivered.append(message_id)
+    async def on_sent(_item: Outgoing, sent: Sent) -> None:
+        delivered.append(sent.message_id)
 
     outbox = Outbox(
         gateway, Limits(group_per_minute=15, queue_max=50), on_sent, clock=clock, sleep=clock.sleep
@@ -69,7 +69,7 @@ async def test_retry_after_is_respected() -> None:
     clock = FakeClock()
     gateway = RecordingGateway(clock, fail_once_with=7)
 
-    async def on_sent(_item: Outgoing, _message_id: int) -> None:
+    async def on_sent(_item: Outgoing, _sent: Sent) -> None:
         return None
 
     outbox = Outbox(gateway, Limits(), on_sent, clock=clock, sleep=clock.sleep)
@@ -84,7 +84,7 @@ async def test_retry_after_is_respected() -> None:
 async def test_queue_overflow() -> None:
     clock = FakeClock()
 
-    async def on_sent(_item: Outgoing, _message_id: int) -> None:
+    async def on_sent(_item: Outgoing, _sent: Sent) -> None:
         return None
 
     outbox = Outbox(

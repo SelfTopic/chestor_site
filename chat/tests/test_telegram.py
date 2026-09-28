@@ -166,6 +166,14 @@ async def test_site_message_goes_with_bold_nick_entity_and_no_parse_mode(
     assert harness.events.messages[-1].author == "Ник\U00010437"
 
 
+async def test_site_message_time_comes_from_telegram_not_server_clock(
+    harness: Harness, telegram: FakeTelegram
+) -> None:
+    await harness.chat.submit(SiteSender("ip", "pass"), "Канеки", "который час?")
+    await eventually(lambda: any(message.source == "site" for message in harness.events.messages))
+    assert harness.events.messages[-1].ts == 1_790_000_000.0
+
+
 async def test_reply_to_site_message_is_quoted_with_nick(
     harness: Harness, telegram: FakeTelegram
 ) -> None:

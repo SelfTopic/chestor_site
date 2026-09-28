@@ -115,10 +115,24 @@ export type PendingMessage = {
   error?: string;
 };
 
+function telegramOrder(id: string): number | null {
+  const match = /^tg:(\d+)$/.exec(id);
+  return match ? Number(match[1]) : null;
+}
+
+// Порядок — по message_id в Telegram: он растёт внутри чата и не зависит от часов сервера,
+// а ts у сообщений из группы и с сайта ставят разные часы.
+function compareMessages(a: LiveMessage, b: LiveMessage): number {
+  const left = telegramOrder(a.id);
+  const right = telegramOrder(b.id);
+  if (left !== null && right !== null) return left - right;
+  return a.ts - b.ts || a.id.localeCompare(b.id);
+}
+
 export function mergeMessages(existing: LiveMessage[], incoming: LiveMessage[], keep = 200): LiveMessage[] {
   const byId = new Map(existing.map((message) => [message.id, message]));
   for (const message of incoming) byId.set(message.id, message);
-  return [...byId.values()].sort((a, b) => a.ts - b.ts || a.id.localeCompare(b.id)).slice(-keep);
+  return [...byId.values()].sort(compareMessages).slice(-keep);
 }
 
 export function settlePending(pending: PendingMessage[], arrived: LiveMessage[]): PendingMessage[] {

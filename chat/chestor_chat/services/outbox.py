@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from ..errors import QueueFull
 from ..limits import Limits
 from ..models import SiteSender
-from .ports import GatewayError, GatewayRetryAfter, GroupGateway
+from .ports import GatewayError, GatewayRetryAfter, GroupGateway, Sent
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ class Outgoing:
     client_id: str | None
 
 
-SentCallback = Callable[[Outgoing, int], Awaitable[None]]
+SentCallback = Callable[[Outgoing, Sent], Awaitable[None]]
 FailedCallback = Callable[[Outgoing], Awaitable[None]]
 
 
@@ -94,7 +94,7 @@ class Outbox:
             if wait > 0:
                 await self._sleep(wait)
             try:
-                message_id = await self._gateway.send(item.nick, item.text)
+                sent = await self._gateway.send(item.nick, item.text)
             except GatewayRetryAfter as exc:
                 logger.warning("Telegram просит подождать %s с", exc.seconds)
                 await self._sleep(exc.seconds)
@@ -103,7 +103,7 @@ class Outbox:
                 logger.exception("Не удалось отправить сообщение с сайта")
                 break
             self._sent_at.append(self._clock())
-            await self._on_sent(item, message_id)
+            await self._on_sent(item, sent)
             return
         if self._on_failed is not None:
             await self._on_failed(item)

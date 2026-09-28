@@ -8,7 +8,7 @@ from ..models import ChatMessage, IncomingMessage, Media, Quote, RelayRecord, Si
 from ..storage import Storage
 from ..validation import clean_nick, clean_text
 from .outbox import Outbox, Outgoing
-from .ports import ChatEvents
+from .ports import ChatEvents, Sent
 from .ratelimit import SendRateLimiter
 
 # Пересланное сообщение с сайта живёт в памяти бота неделю: столько можно банить ответом.
@@ -96,18 +96,18 @@ class ChatService:
             Outgoing(nick=clean, text=body, sender=sender, client_id=client_id)
         )
 
-    async def on_sent(self, item: Outgoing, tg_message_id: int) -> None:
+    async def on_sent(self, item: Outgoing, sent: Sent) -> None:
         record = RelayRecord(
             nick=item.nick, text=item.text, ip_hash=item.sender.ip_hash, pass_id=item.sender.pass_id
         )
-        await self._storage.remember_relay(tg_message_id, record, RELAY_TTL)
+        await self._storage.remember_relay(sent.message_id, record, RELAY_TTL)
         await self._publish(
             ChatMessage(
-                id=f"tg:{tg_message_id}",
+                id=f"tg:{sent.message_id}",
                 source="site",
                 author=item.nick,
                 text=item.text,
-                ts=self._clock(),
+                ts=sent.ts,
                 client_id=item.client_id,
             )
         )

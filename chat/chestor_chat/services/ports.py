@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Protocol
 
 from ..models import ChatMessage
@@ -20,6 +21,13 @@ class GatewayError(Exception):
     pass
 
 
+@dataclass(frozen=True)
+class Sent:
+    message_id: int
+    # Время сообщения по часам Telegram: те же часы, что у сообщений из группы.
+    ts: float
+
+
 class GroupGateway(Protocol):
-    # Отправить «Ник — текст» в группу и вернуть message_id отправленного сообщения.
-    async def send(self, nick: str, text: str) -> int: ...
+    # Отправить «Ник — текст» в группу и вернуть, что Telegram сказал об отправленном.
+    async def send(self, nick: str, text: str) -> Sent: ...
