@@ -29,7 +29,8 @@ test("у каждого диалога есть метаданные", () => {
   for (const id of DIALOG_IDS) expect(DIALOGS[id].id).toBe(id);
 });
 
-test("email владельца не публикуется без разрешения", () => {
+test("публикуется только разрешённый email владельца", () => {
   const everything = JSON.stringify({ OWNER, SELF_MESSAGES, STACK, PROJECTS, TIMELINE, DIALOGS });
-  expect(everything).not.toMatch(/@[\w-]+\.\w+/);
+  const emails = new Set(everything.match(/[\w.-]+@[\w-]+\.\w+/g) ?? []);
+  expect([...emails]).toEqual(["chestor.official@gmail.com"]);
 });

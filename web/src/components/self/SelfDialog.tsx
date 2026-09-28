@@ -34,6 +34,12 @@ export function SelfDialog() {
               </dd>
             </div>
             <div>
+              <dt>Почта</dt>
+              <dd>
+                <a href={OWNER.links.email.href}>{OWNER.links.email.label}</a>
+              </dd>
+            </div>
+            <div>
               <dt>Откуда</dt>
               <dd>{OWNER.country}</dd>
             </div>
@@ -89,6 +95,7 @@ export function SelfDialog() {
             [
               { label: "Telegram", href: OWNER.links.telegram.href },
               { label: "GitHub", href: OWNER.links.github.href },
+              { label: "Почта", href: OWNER.links.email.href },
             ],
             [
               { label: "Канал «Проекты»", href: "/c/projects" },

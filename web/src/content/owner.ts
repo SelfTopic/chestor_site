@@ -9,6 +9,7 @@ export const OWNER = {
   links: {
     telegram: { href: "https://t.me/Self_topic", label: "@Self_topic" },
     github: { href: "https://github.com/SelfTopic", label: "SelfTopic" },
+    email: { href: "mailto:chestor.official@gmail.com", label: "chestor.official@gmail.com" },
   },
 } as const;
 
