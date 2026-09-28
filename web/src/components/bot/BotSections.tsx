@@ -4,8 +4,10 @@ import { MessageBubble } from "@/components/tg/MessageBubble";
 import wallpaper from "@/components/tg/Wallpaper.module.css";
 import {
   BATTLE_RULES,
+  BOT_COMMANDS_CHANNEL,
   BOT_ENGINEERING,
   BOT_FACTS,
+  BOT_FAQ,
   BOT_HERO,
   BOT_REPO,
   BOT_TELEGRAM,
@@ -19,6 +21,7 @@ import {
   KAGUNE,
   KAGUNE_LOTTERY,
   LEVEL_FORMULA,
+  PLAY_STEPS,
 } from "@/content/bot";
 
 import styles from "./Bot.module.css";
@@ -245,6 +248,42 @@ export function Engineering() {
           <span key={item}>{item}</span>
         ))}
       </p>
+    </div>
+  );
+}
+
+export function PlaySteps() {
+  return (
+    <div className={styles.play}>
+      <ol className={styles.steps}>
+        {PLAY_STEPS.map((step) => (
+          <li key={step.title} className={styles.step}>
+            <h3 className={styles.stepTitle}>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+      <div className={styles.actions}>
+        <a href={BOT_TELEGRAM.href} className={styles.primary}>
+          Играть в {BOT_TELEGRAM.label}
+        </a>
+        <a href={BOT_COMMANDS_CHANNEL.href} className={styles.secondary}>
+          Все команды — {BOT_COMMANDS_CHANNEL.label}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export function Faq() {
+  return (
+    <div className={styles.faq}>
+      {BOT_FAQ.map((item) => (
+        <section key={item.question} className={styles.faqItem}>
+          <h3 className={styles.faqQuestion}>{item.question}</h3>
+          <p>{item.answer}</p>
+        </section>
+      ))}
     </div>
   );
 }
