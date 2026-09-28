@@ -1,0 +1,49 @@
+# Локальный и прод-запуск: web (Next.js), chat (aiohttp + бот), redis.
+# Наружу — только на 127.0.0.1: перед ними стоит nginx (см. docs/DEPLOY.md).
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  chat:
+    build: ./chat
+    env_file:
+      - ./chat/.env
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      GHOUL_QUIZ_TOKEN_PATH: /data/ghoul_quiz/tokens.json
+    volumes:
+      # Сессия ghoul_quiz владельца (ghoul-quiz-register): переживает пересборку контейнера.
+      - ghoul-quiz:/data/ghoul_quiz
+    # На хосте 8080 уже занят userbot-api, поэтому наружу чат смотрит портами 8090/8091.
+    ports:
+      - "127.0.0.1:${CHAT_HOST_PORT:-8090}:8080"
+      - "127.0.0.1:${CHAT_WEBHOOK_HOST_PORT:-8091}:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./web
+      args:
+        CHAT_BACKEND_URL: http://chat:8080
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      chat:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+  ghoul-quiz:

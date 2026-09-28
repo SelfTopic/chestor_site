@@ -1,0 +1,37 @@
+.badge {
+  --rank-color: var(--rank-b);
+
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px 2px 6px;
+  border: 1.5px solid var(--rank-color);
+  border-radius: var(--radius-sm);
+  color: var(--rank-color);
+  transform: rotate(-2deg);
+}
+
+.badge[data-rank="SSS"] { --rank-color: var(--rank-sss); }
+.badge[data-rank="SS"] { --rank-color: var(--rank-ss); }
+.badge[data-rank="S"] { --rank-color: var(--rank-s); }
+.badge[data-rank="A"] { --rank-color: var(--rank-a); }
+
+.label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rank {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+:global(:root[data-theme="ghoul"]) .badge[data-rank="SSS"] {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--rank-color) 55%, transparent);
+  text-shadow: 0 0 8px var(--rank-color);
+}

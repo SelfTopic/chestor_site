@@ -1,0 +1,41 @@
+.keyboard {
+  display: grid;
+  gap: 4px;
+  max-width: min(480px, 85%);
+  margin-top: 2px;
+}
+
+.row {
+  display: flex;
+  gap: 4px;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-service) 80%, transparent);
+  color: var(--color-on-service);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+.button:hover {
+  background: var(--color-service);
+  text-decoration: none;
+}
+
+.corner {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  opacity: 0.8;
+}

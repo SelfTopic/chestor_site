@@ -1,0 +1,38 @@
+.thread {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.link {
+  font-weight: 600;
+}
+
+.typing {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-text-muted);
+}
+
+/* Пасхалка 1000-7: какуган «открывается» на весь экран. */
+.thread::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.thread[data-awake]::after {
+  background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(200, 0, 30, 0.55) 100%);
+  animation: awaken 1.4s var(--ease-out);
+}
+
+@keyframes awaken {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}

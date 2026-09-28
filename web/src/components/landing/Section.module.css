@@ -1,0 +1,33 @@
+.section {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) 0;
+  scroll-margin-top: var(--header-height);
+}
+
+.kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+
+.title {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.lead {
+  max-width: 680px;
+  margin-top: var(--space-3);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.body {
+  margin-top: var(--space-6);
+}

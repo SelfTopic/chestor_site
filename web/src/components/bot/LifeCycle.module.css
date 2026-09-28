@@ -1,0 +1,62 @@
+.figure {
+  display: grid;
+  place-items: center;
+}
+
+.svg {
+  width: min(360px, 100%);
+  height: auto;
+  overflow: visible;
+}
+
+.ring {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 2;
+}
+
+.pulse {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 60 631;
+  transform-origin: 150px 150px;
+  animation: orbit 6s linear infinite;
+}
+
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.node {
+  fill: var(--color-bg-elevated);
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.label {
+  fill: var(--color-text);
+  font: 600 10px var(--font-sans);
+  text-anchor: middle;
+}
+
+.center {
+  fill: var(--color-accent);
+  font: 800 26px var(--font-display);
+  text-anchor: middle;
+}
+
+.centerCaption {
+  fill: var(--color-text-muted);
+  font: 500 12px var(--font-mono);
+  text-anchor: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+}

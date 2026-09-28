@@ -1,0 +1,9 @@
+.title {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.cta {
+  justify-self: start;
+  font-weight: 600;
+}

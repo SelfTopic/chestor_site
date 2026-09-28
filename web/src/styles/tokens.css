@@ -1,0 +1,215 @@
+/* Токены обеих тем. Компоненты используют только var(--…), своих цветов не заводят. */
+
+:root {
+  --font-sans: var(--font-onest), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: var(--font-unbounded), var(--font-sans);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-md: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: clamp(2rem, 5vw, 3rem);
+  --text-hero: clamp(2.5rem, 8vw, 5.5rem);
+  --leading: 1.45;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 5rem;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-bubble: 16px;
+  --radius-tail: 4px;
+  --radius-pill: 999px;
+
+  --sidebar-width: 380px;
+  --header-height: 56px;
+  --content-width: 720px;
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 420ms;
+  --duration-awaken: 900ms;
+
+  --z-header: 10;
+  --z-overlay: 50;
+}
+
+/* «Человек»: светлый, синие тона Telegram. */
+:root,
+:root[data-theme="human"] {
+  color-scheme: light;
+
+  --color-bg: #ffffff;
+  --color-bg-elevated: #ffffff;
+  --color-bg-sunken: #f4f4f5;
+  --color-bg-hover: #f1f3f5;
+  --color-bg-active: #2477cc;
+  --color-on-active: #ffffff;
+  --color-chat-bg: #dce6ef;
+  --color-chat-pattern: rgba(51, 144, 236, 0.09);
+
+  --color-text: #0f0f0f;
+  --color-text-muted: #5d6166;
+  --color-text-faint: #676d72;
+  --color-border: #e3e5e8;
+  --color-border-strong: #c9cdd2;
+
+  --color-accent: #2477cc;
+  --color-accent-strong: #1b6ec2;
+  --color-accent-text: #1665b5;
+  --color-accent-soft: rgba(51, 144, 236, 0.12);
+  --color-on-accent: #ffffff;
+  --color-link: #1a6bbd;
+
+  --color-bubble-in: #ffffff;
+  --color-bubble-out: #d9ecff;
+  --color-bubble-text: #0f0f0f;
+  --color-bubble-meta: #7d8b99;
+  --color-bubble-meta-out: #4b8bc9;
+  --color-quote-bar: #3390ec;
+  --color-service: rgba(38, 62, 88, 0.42);
+  --color-on-service: #ffffff;
+
+  --color-danger: #e53935;
+  --color-success: #2eaa5a;
+  --color-warning: #d98a00;
+  --color-badge: #2477cc;
+  --color-badge-muted: #a8b0b8;
+
+  --rank-sss: #c2185b;
+  --rank-ss: #d84315;
+  --rank-s: #ef6c00;
+  --rank-a: #1e88e5;
+  --rank-b: #607d8b;
+
+  --shadow-sm: 0 1px 2px rgba(16, 35, 47, 0.12);
+  --shadow-md: 0 4px 16px rgba(16, 35, 47, 0.12);
+  --shadow-bubble: 0 1px 1px rgba(16, 35, 47, 0.1);
+  --glow: none;
+
+  --focus-ring: 0 0 0 3px rgba(51, 144, 236, 0.45);
+  --scrollbar: rgba(0, 0, 0, 0.18);
+}
+
+/* «Гуль»: чёрное и красное, какуган. */
+:root[data-theme="ghoul"] {
+  color-scheme: dark;
+
+  --color-bg: #0e0b0c;
+  --color-bg-elevated: #161113;
+  --color-bg-sunken: #1c1517;
+  --color-bg-hover: #1f1719;
+  --color-bg-active: #6e0f22;
+  --color-on-active: #fff1f3;
+  --color-chat-bg: #080607;
+  --color-chat-pattern: rgba(214, 31, 60, 0.075);
+
+  --color-text: #f1e9ea;
+  --color-text-muted: #a19295;
+  --color-text-faint: #85777a;
+  --color-border: #2a1f22;
+  --color-border-strong: #3d2c30;
+
+  --color-accent: #d21c3a;
+  --color-accent-strong: #ff4d66;
+  --color-accent-text: #ff4d66;
+  --color-accent-soft: rgba(226, 32, 63, 0.16);
+  --color-on-accent: #ffffff;
+  --color-link: #ff5c75;
+
+  --color-bubble-in: #1a1416;
+  --color-bubble-out: #4d0d1a;
+  --color-bubble-text: #f1e9ea;
+  --color-bubble-meta: #8c7b7f;
+  --color-bubble-meta-out: #e28b99;
+  --color-quote-bar: #e2203f;
+  --color-service: rgba(60, 10, 20, 0.7);
+  --color-on-service: #f1e9ea;
+
+  --color-danger: #ff4d6a;
+  --color-success: #4fc27a;
+  --color-warning: #f0a830;
+  --color-badge: #d21c3a;
+  --color-badge-muted: #5a4a4e;
+
+  --rank-sss: #ff1f45;
+  --rank-ss: #ff5a36;
+  --rank-s: #ff9a3c;
+  --rank-a: #d9a3ad;
+  --rank-b: #8f8084;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-bubble: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --glow: 0 0 24px rgba(226, 32, 63, 0.35);
+
+  --focus-ring: 0 0 0 3px rgba(255, 51, 85, 0.55);
+  --scrollbar: rgba(255, 255, 255, 0.16);
+}
+
+/* Цвета ников (как в группах Telegram): data-tone = хэш имени по модулю 7. */
+[data-tone="0"] { --tone: #e2574c; }
+[data-tone="1"] { --tone: #d98a00; }
+[data-tone="2"] { --tone: #7b61ff; }
+[data-tone="3"] { --tone: #2ea44f; }
+[data-tone="4"] { --tone: #00a3a3; }
+[data-tone="5"] { --tone: #2a86d6; }
+[data-tone="6"] { --tone: #c04ad8; }
+
+:root[data-theme="ghoul"] [data-tone="0"] { --tone: #ff5c75; }
+:root[data-theme="ghoul"] [data-tone="1"] { --tone: #ff9a3c; }
+:root[data-theme="ghoul"] [data-tone="2"] { --tone: #b58cff; }
+:root[data-theme="ghoul"] [data-tone="3"] { --tone: #6fd08f; }
+:root[data-theme="ghoul"] [data-tone="4"] { --tone: #4fd1c5; }
+:root[data-theme="ghoul"] [data-tone="5"] { --tone: #7ab8ff; }
+:root[data-theme="ghoul"] [data-tone="6"] { --tone: #f08bd9; }
+
+/* Подсветка кода и терминал. */
+:root,
+:root[data-theme="human"] {
+  --code-bg: #f6f8fb;
+  --code-border: #e1e6ee;
+  --syntax-text: #1f2933;
+  --syntax-keyword: #7c3aed;
+  --syntax-string: #0f7b3f;
+  --syntax-comment: #626e77;
+  --syntax-number: #b45309;
+  --syntax-type: #1f6fd1;
+  --syntax-func: #b8325a;
+  --syntax-decorator: #9a6700;
+  --terminal-bg: #10151c;
+  --terminal-text: #d6e2f0;
+  --terminal-prompt: #5fb3ff;
+  --terminal-error: #ff7b72;
+  --terminal-warn: #e3b341;
+}
+
+:root[data-theme="ghoul"] {
+  --code-bg: #120d0f;
+  --code-border: #2a1f22;
+  --syntax-text: #eadfe1;
+  --syntax-keyword: #ff5c75;
+  --syntax-string: #e9b97a;
+  --syntax-comment: #998589;
+  --syntax-number: #ff9a3c;
+  --syntax-type: #f2a6b3;
+  --syntax-func: #ffd1d8;
+  --syntax-decorator: #d9a3ad;
+  --terminal-bg: #060405;
+  --terminal-text: #eadfe1;
+  --terminal-prompt: #ff3355;
+  --terminal-error: #ff4d6a;
+  --terminal-warn: #f0a830;
+}

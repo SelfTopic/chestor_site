@@ -1,0 +1,18 @@
+.page {
+  min-height: 100dvh;
+  padding-bottom: var(--space-8);
+  background: var(--color-bg);
+}
+
+.footer {
+  width: min(1080px, 100%);
+  margin: var(--space-8) auto 0;
+  padding: var(--space-5) var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.footer a {
+  font-weight: 600;
+}

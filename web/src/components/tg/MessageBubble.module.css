@@ -1,0 +1,113 @@
+.row {
+  display: flex;
+  padding: 1px 0;
+}
+
+.row[data-direction="out"] {
+  justify-content: flex-end;
+}
+
+.bubble {
+  position: relative;
+  max-width: min(480px, 85%);
+  padding: 6px 10px 7px;
+  border-radius: var(--radius-bubble);
+  background: var(--color-bubble-in);
+  box-shadow: var(--shadow-bubble);
+  color: var(--color-bubble-text);
+  overflow-wrap: anywhere;
+}
+
+.bubble[data-wide] {
+  max-width: min(560px, 100%);
+}
+
+.row[data-direction="out"] .bubble {
+  background: var(--color-bubble-out);
+}
+
+.row[data-direction="in"] .bubble[data-tail] {
+  border-bottom-left-radius: var(--radius-tail);
+}
+
+.row[data-direction="out"] .bubble[data-tail] {
+  border-bottom-right-radius: var(--radius-tail);
+}
+
+.author {
+  margin-bottom: 2px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--tone);
+}
+
+.authorTag {
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent-soft);
+  color: var(--color-text-muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.text {
+  white-space: pre-wrap;
+  line-height: 1.4;
+}
+
+/* Время обтекается текстом, как в Telegram: плавает справа в последней строке. */
+.meta {
+  float: right;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin: 6px 0 -4px 10px;
+  font-size: var(--text-xs);
+  line-height: 1;
+  color: var(--color-bubble-meta);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.row[data-direction="out"] .meta {
+  color: var(--color-bubble-meta-out);
+}
+
+.quote {
+  display: grid;
+  margin: 2px 0 4px;
+  padding: 3px 8px;
+  border-left: 3px solid var(--tone);
+  border-radius: var(--radius-tail);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+  font-size: var(--text-sm);
+}
+
+.quoteAuthor {
+  font-weight: 600;
+  color: var(--tone);
+}
+
+.quoteText {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.service {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2) 0;
+}
+
+.service > span {
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-service);
+  color: var(--color-on-service);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+}
