@@ -599,3 +599,58 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
+
+/* ——— Как начать играть и FAQ ——— */
+.play {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: var(--space-5);
+  padding-top: calc(var(--space-5) + 28px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-elevated);
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-5);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-accent-text);
+}
+
+.stepTitle,
+.faqQuestion {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-lg);
+}
+
+.step p,
+.faqItem p {
+  color: var(--color-text-muted);
+}
+
+.faq {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 760px;
+}
+
+.faqItem {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}

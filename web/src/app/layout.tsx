@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { JetBrains_Mono, Onest, Unbounded } from "next/font/google";
 import type { ReactNode } from "react";
 
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { personLd, websiteLd } from "@/lib/structuredData";
 import { THEME_COLOR, themeInitScript } from "@/lib/theme";
 
 import "./globals.css";
@@ -50,7 +52,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Тема ставится до первой отрисовки, иначе «Гуль» мигнёт светлым. Строка статична. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <JsonLd data={personLd()} />
+        <JsonLd data={websiteLd()} />
+      </body>
     </html>
   );
 }

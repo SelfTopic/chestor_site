@@ -218,3 +218,51 @@ export const BOT_ENGINEERING = [
   "Дизайн-документы живут рядом с кодом: BATTLE_DESIGN, BATTLE_ENGINE, ECONOMY, REGENERATION.",
   "В сентябре 2026 бот целиком переехал с aiogram 3 на selfrotgram.",
 ] as const;
+
+export const BOT_COMMANDS_CHANNEL = { href: "https://t.me/CheStorCommands", label: "@CheStorCommands" } as const;
+
+// Прямой ответ на запрос «где поиграть в Токийского гуля в Telegram»: его читают и люди, и ИИ-поиск.
+export const PLAY_STEPS: readonly { title: string; text: string }[] = [
+  {
+    title: "Открой бота",
+    text: "Найди @chestor_chat_bot в Telegram и отправь /start. Играть можно в личке или в групповом чате — добавь бота в чат, и играть будут все.",
+  },
+  {
+    title: "Стань гулем",
+    text: "Напиши «растить кагуне» — родишься гулем. Тип кагуне выпадет случайно: укаку, коукаку, ринкаку или бикаку.",
+  },
+  {
+    title: "Выживай и дерись",
+    text: "«голод» — насколько ты голоден, «сожрать человека» — поесть раз в сутки, «бить моба» — первый бой, «дуэль» — бой с другим гулем.",
+  },
+  {
+    title: "Все команды",
+    text: "Полный список — в канале @CheStorCommands или по команде /help.",
+  },
+];
+
+export const BOT_FAQ: readonly { question: string; answer: string }[] = [
+  {
+    question: "Где поиграть в «Токийского гуля» в Telegram?",
+    answer:
+      "В chestor_bot — текстовой RPG по «Токийскому гулю» прямо в Telegram. Откройте @chestor_chat_bot и отправьте /start или добавьте бота в свой групповой чат.",
+  },
+  {
+    question: "Что можно делать в игре?",
+    answer:
+      "Стать гулем с одним из четырёх типов кагуне, следить за голодом и есть людей, драться с мобами и с другими гулями в дуэлях, копить CheSton и RC-клетки, прокачивать статы и уровень. Если голод уйдёт в минус, гуль умрёт и родится заново.",
+  },
+  {
+    question: "Нужно ли что-то устанавливать?",
+    answer: "Нет. Игра целиком внутри Telegram: достаточно написать боту.",
+  },
+  {
+    question: "На каком языке бот?",
+    answer: "На русском.",
+  },
+  {
+    question: "Кто сделал chestor_bot?",
+    answer:
+      "CheStor (Self), бэкенд-разработчик на Python. Бот написан на его собственном фреймворке selfrotgram, исходники открыты на GitHub.",
+  },
+];

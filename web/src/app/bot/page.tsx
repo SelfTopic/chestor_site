@@ -8,21 +8,25 @@ import {
   Demos,
   EconomyCards,
   Engineering,
+  Faq,
   HungerMeter,
   KaguneCards,
+  PlaySteps,
 } from "@/components/bot/BotSections";
 import styles from "@/components/bot/Bot.module.css";
 import { LifeCycle } from "@/components/bot/LifeCycle";
 import landing from "@/components/landing/Landing.module.css";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { Section } from "@/components/landing/Section";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { BOT_REPO } from "@/content/bot";
+import { botFaqLd, botGameLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title: "chestor_bot — досье CCG",
+  title: { absolute: "chestor_bot — RPG по «Токийскому гулю» в Telegram" },
   alternates: { canonical: "/bot" },
   description:
-    "RPG-бот в Telegram по «Токийскому гулю»: голод, кагуне, честный боевой движок, CheSton и RC-клетки. Версия 1.0.0.",
+    "Текстовая RPG по «Токийскому гулю» в Telegram: стань гулем, выбери кагуне, дерись в дуэлях и с мобами, копи CheSton и RC-клетки. Играть: @chestor_chat_bot.",
 };
 
 export default function BotPage() {
@@ -31,6 +35,14 @@ export default function BotPage() {
       <LandingNav back={{ href: "/c/chestor_bot", label: "К диалогу" }} />
       <main>
         <BotHero />
+        <Section
+          id="play"
+          kicker="00 · Как начать"
+          title="Как поиграть в «Токийского гуля» в Telegram"
+          lead="Ничего устанавливать не нужно: игра целиком живёт в Telegram."
+        >
+          <PlaySteps />
+        </Section>
         <Section
           id="cycle"
           kicker="01 · Жизненный цикл"
@@ -60,7 +72,12 @@ export default function BotPage() {
         <Section id="engineering" kicker="07 · Под капотом" title="Цифры и стек">
           <Engineering />
         </Section>
+        <Section id="faq" kicker="08 · Вопросы" title="Частые вопросы">
+          <Faq />
+        </Section>
       </main>
+      <JsonLd data={botGameLd()} />
+      <JsonLd data={botFaqLd()} />
       <footer className={landing.footer}>
         Исходники: <a href={BOT_REPO}>github.com/SelfTopic/chestor_bot</a> · фреймворк — <Link href="/selfrotgram">selfrotgram</Link>
       </footer>

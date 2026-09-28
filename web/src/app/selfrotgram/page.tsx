@@ -4,6 +4,7 @@ import Link from "next/link";
 import landing from "@/components/landing/Landing.module.css";
 import { LandingNav } from "@/components/landing/LandingNav";
 import { Section } from "@/components/landing/Section";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { EchoDemo } from "@/components/selfrot/EchoDemo";
 import { Install } from "@/components/selfrot/Install";
 import { Pairs } from "@/components/selfrot/Pairs";
@@ -11,9 +12,10 @@ import styles from "@/components/selfrot/Selfrot.module.css";
 import { Terminal } from "@/components/selfrot/Terminal";
 import { RichText } from "@/components/tg/RichText";
 import { GUARANTEES, SR_FACTS, SR_FEATURES, SR_HERO, SR_LINKS, SR_MISSING } from "@/content/selfrotgram";
+import { selfrotgramLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title: "selfrotgram — типы говорят правду",
+  title: { absolute: "selfrotgram — фреймворк для Telegram Bot API на Python, где типы говорят правду" },
   alternates: { canonical: "/selfrotgram" },
   description:
     "Асинхронная библиотека для Telegram Bot API на aiohttp и pydantic: фильтр гарантирует, тип обещает, библиотека сверяет при импорте.",
@@ -22,6 +24,7 @@ export const metadata: Metadata = {
 export default function SelfrotgramPage() {
   return (
     <div className={landing.page}>
+      <JsonLd data={selfrotgramLd()} />
       <LandingNav back={{ href: "/c/selfrotgram", label: "К каналу" }} />
       <main>
         <section className={styles.hero} aria-labelledby="sr-title">
