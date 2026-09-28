@@ -22,7 +22,7 @@ describe("chestor_bot", () => {
 });
 
 test("статичные диалоги отвечают автоответом", () => {
-  expect(respond("self", "привет")[0]?.link?.href).toBe("https://t.me/Self_topic");
+  expect(respond("self", "привет")[0]?.link?.href).toBe("https://t.me/chestor");
   expect(respond("live", "привет")).toEqual([]);
 });
 

@@ -10,7 +10,7 @@
 ## Владелец
 
 - GitHub: `SelfTopic` (https://github.com/SelfTopic), подпись в git — CheStor, имя в профиле — Self.
-- Telegram: https://t.me/Self_topic
+- Telegram: https://t.me/chestor
 - Россия. Бэкенд-разработчик, основной язык Python, второй — TypeScript.
 - Первые репозитории — апрель 2025. Любит «Токийского гуля», Telegram Bot API, Павла Дурова.
 - Цитата из профиля: «In code I trust, for it never lies or betrays — it simply executes.»
@@ -66,8 +66,7 @@ RPG-бот в Telegram по «Токийскому гулю».
 - История: написан на aiogram 3, в сентябре 2026 целиком перенесён на selfrotgram.
 - Стек: Python 3.11–3.14, selfrotgram, SQLAlchemy 2 async, PostgreSQL 16, Alembic,
   dependency-injector, Docker Compose, ежедневные бэкапы в облако. Вебхук на chestor.site.
-- Юзернейм прод-бота в репозитории не указан (в чатах работает `@chestor_chat_bot`) — уточнить
-  у владельца, прежде чем давать ссылку.
+- Прод-бот в Telegram: @chestor_chat_bot (https://t.me/chestor_chat_bot), подтверждено владельцем.
 
 ### selfrotgram — ранг SS
 https://github.com/SelfTopic/selfrotgram · https://pypi.org/project/selfrotgram/ · Python · MIT

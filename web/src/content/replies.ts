@@ -6,7 +6,7 @@ export type AutoReply = { text: string; link?: ReplyLink };
 export const AUTO_REPLIES: Partial<Record<DialogId, AutoReply>> = {
   self: {
     text: "Это сайт, а не мой Telegram: сюда я не отвечаю. Живой я — там.",
-    link: { href: "https://t.me/Self_topic", label: "Написать @Self_topic" },
+    link: { href: "https://t.me/chestor", label: "Написать @chestor" },
   },
   projects: {
     text: "В канал пишут только админы. Поговорить можно в Live-чате — он настоящий.",

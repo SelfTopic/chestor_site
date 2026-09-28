@@ -7,7 +7,7 @@ export const OWNER = {
   since: "апреля 2025",
   quote: "In code I trust, for it never lies or betrays — it simply executes.",
   links: {
-    telegram: { href: "https://t.me/Self_topic", label: "@Self_topic" },
+    telegram: { href: "https://t.me/chestor", label: "@chestor" },
     github: { href: "https://github.com/SelfTopic", label: "SelfTopic" },
     email: { href: "mailto:chestor.official@gmail.com", label: "chestor.official@gmail.com" },
   },

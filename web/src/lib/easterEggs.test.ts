@@ -33,6 +33,6 @@ test("лорные пасхалки по ключевым словам", () => {
 });
 
 test("без ключевых слов — обычный ответ диалога", () => {
-  expect(respond("self", "привет")[0]?.link?.href).toBe("https://t.me/Self_topic");
-  expect(respond("self", "кофейня")[0]?.link?.href).toBe("https://t.me/Self_topic");
+  expect(respond("self", "привет")[0]?.link?.href).toBe("https://t.me/chestor");
+  expect(respond("self", "кофейня")[0]?.link?.href).toBe("https://t.me/chestor");
 });
