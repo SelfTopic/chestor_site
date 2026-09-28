@@ -1,4 +1,4 @@
-// «Сейчас в работе»: последние коммиты публичных репозиториев, собираются при сборке сайта.
+// «Сейчас в работе»: последние коммиты публичных репозиториев; страница перегенерируется раз в час (ISR).
 export type RecentCommit = { repo: string; message: string; date: string; url: string };
 
 type ApiCommit = {
@@ -7,6 +7,7 @@ type ApiCommit = {
 };
 
 const MESSAGE_MAX = 90;
+const COMMITS_REVALIDATE_SECONDS = 3600;
 
 export function firstLine(message: string): string {
   const line = message.split("\n")[0]?.trim() ?? "";
@@ -43,7 +44,7 @@ export async function fetchRecentCommits(
       try {
         const response = await fetchImpl(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=5`, {
           headers,
-          cache: "force-cache",
+          next: { revalidate: COMMITS_REVALIDATE_SECONDS },
           signal: AbortSignal.timeout(5000),
         });
         return response.ok ? parseCommits(repo, await response.json()) : [];
